@@ -11,15 +11,31 @@
     <main>
       <h1>Vanilla JavaScript App</h1>
       <p>Loading content from the API: <b id="message"></b></b></p>
+      <input type="file" id="myFile">
     </main>
   </body>
 
   <script>
     (async function () {
-      let response = await fetch(`api/message`);
-      let message = await response.json();
 
-      document.querySelector("#message").innerHTML = message.text
+      let response = await fetch(`api/CheckConnection?connector=dropbox`);
+
+      let isConnected = false;
+
+      if (response && response.status ===  200) 
+      {
+        document.querySelector("#message").innerHTML = "Connected to Dropbox!"
+        isConnected = true;
+      }
+      else if (response && response.status ===  401) 
+      {
+        //Incase of unauthorized look for 
+        window.location.href = error.response.data.link;
+        isConnected = false;
+      }
+      
+      var myUploadedFile = document.getElementById("myFile").files[0];
+
     })();
   </script>
 </html>
