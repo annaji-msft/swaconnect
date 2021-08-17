@@ -24,13 +24,19 @@
 
       if (response && response.status ===  200) 
       {
-        document.querySelector("#message").innerHTML = "Connected to Dropbox!"
+        response.text().then(function (text) {
+          document.querySelector("#message").innerHTML = `Connected to Dropbox: ${text}`
+        });
+       
         isConnected = true;
       }
       else if (response && response.status ===  401) 
       {
+        response.text().then(function (text) {
+          window.location.href = text;
+        });
         //Incase of unauthorized look for 
-        window.location.href = error.response.data.link;
+      
         isConnected = false;
       }
       
