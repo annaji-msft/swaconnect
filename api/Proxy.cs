@@ -42,11 +42,11 @@ namespace Company.Function
 
             httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", gatewayKey);
 
-            var connection = await ConnectionManager.GetConnectionAsync(tokenProviderId, connectionId);
+            var connection = await ConnectionManager.GetConnectionAsync(tokenProviderId.ToString(), connectionId);
 
             if (connection != null && connection.Properties.Status.ToUpper().Equals("CONNECTED")) 
             {
-                var runtimeURL = $"{gatewayUrl}/GenericProxy/{backendApi}";
+                var runtimeURL = $"{gatewayUrl}/GenericProxy/{backendApi.ToString()}";
                 log.LogInformation($"Calling Url - {runtimeURL}");
 
                 var httpMethod = new HttpMethod(req.Method);
@@ -64,7 +64,7 @@ namespace Company.Function
                     }
 
                    httpRequestMessage.Headers.Add("connector-id", tokenProviderId.ToString());
-                   httpRequestMessage.Headers.Add("connection-id", connectionId);
+                   httpRequestMessage.Headers.Add("connection-id", connectionId.ToString());
                    httpRequestMessage.Headers.Add("backend-host", backendHost.ToString());
 
                     var result = await httpClient.SendAsync(httpRequestMessage);

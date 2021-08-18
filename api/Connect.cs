@@ -21,7 +21,7 @@ namespace Company.Function
             string responseMessage = JsonConvert.SerializeObject(req.Headers);
             req.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL-ID", out var principalId);
             req.Headers.TryGetValue("X-MS-ORIGINAL-URL", out var swaUrl);
-            req.Headers.TryGetValue("X-MS-TOKENPROVIDER-ID", out var tokenProviderId);
+            req.Headers.TryGetValue("X-MS-SWA-TOKENPROVIDER-ID", out var tokenProviderId);
 
             var redirectUrl = swaUrl.ToString().Replace("/api/Connect", string.Empty);
 
