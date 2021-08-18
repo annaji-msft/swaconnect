@@ -13,17 +13,17 @@ namespace Company.Function
 {
     public static class Connect
     {
-        [FunctionName("CheckConnection")]
+        [FunctionName("Connect")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
             ILogger log)
         {
             string responseMessage = JsonConvert.SerializeObject(req.Headers);
             req.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL-ID", out var principalId);
             req.Headers.TryGetValue("X-MS-ORIGINAL-URL", out var swaUrl);
-            string connectorName = req.Query["connector"];
+            req.Headers.TryGetValue("X-MS-TOKENPROVIDER-ID", out var tokenProviderId);
 
-            var redirectUrl = swaUrl.ToString().Replace("/api/CheckConnection", string.Empty);
+            var redirectUrl = swaUrl.ToString().Replace("/api/Connect", string.Empty);
 
             log.LogInformation($"principalId - {principalId}");
             log.LogInformation($"swaurl - {swaUrl}");
@@ -34,20 +34,20 @@ namespace Company.Function
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
 
-            connection = await ConnectionManager.GetConnectionAsync(connectorName, connectionId);
+            connection = await ConnectionManager.GetConnectionAsync(tokenProviderId, connectionId);
 
             if (connection == null) 
             {
                 log.LogInformation("connection not found!");
-                connection = await ConnectionManager.CreateConnectionAsync(connectorName, connectionId, "72f988bf-86f1-41af-91ab-2d7cd011db47");
+                connection = await ConnectionManager.CreateConnectionAsync(tokenProviderId, connectionId, "72f988bf-86f1-41af-91ab-2d7cd011db47");
                 
-                var consentLinks = await ConnectionManager.GetConsentLinkAsync(connectorName, connectionId, redirectUrl);
+                var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
                 return new ContentResult { Content =  consentLinks.Value[0].Link, StatusCode =  401 };
             } 
             else if (connection.Properties.Status.ToUpper().Equals("ERROR")) 
             {
                 log.LogInformation("connection found but not authenticated!");
-                var consentLinks = await ConnectionManager.GetConsentLinkAsync(connectorName, connectionId, redirectUrl);
+                var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
                 return new ContentResult { Content =  consentLinks.Value[0].Link, StatusCode =  401 };
             } 
             else 

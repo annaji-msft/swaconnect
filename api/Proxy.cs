@@ -12,9 +12,9 @@ using MSHA.ApiConnections;
 
 namespace Company.Function
 {
-    public static class Invoke
+    public static class Proxy
     {
-        [FunctionName("Invoke")]
+        [FunctionName("Proxy")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "patch", "delete", Route = null)] HttpRequest req,
             ILogger log)
@@ -26,11 +26,14 @@ namespace Company.Function
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
 
-            string connectorName = req.Query["connector"];
-            log.LogInformation($"connectorName - {connectorName}");
+            req.Headers.TryGetValue("X-MS-SWA-TOKENPROVIDER-ID", out var tokenProviderId);
+            log.LogInformation($"connectorName - {tokenProviderId}");
 
-            string path = req.Query["path"];
-            log.LogInformation($"path - {path}");
+            req.Headers.TryGetValue("X-MS-SWA-PROXY-BACKEND-HOST", out var backendHost);
+            log.LogInformation($"backendHost - {backendHost}");
+
+            req.Headers.TryGetValue("X-MS-SWA-PROXY-BACKEND-API", out var backendApi);
+            log.LogInformation($"backendApi - {backendApi}");
                 
             var gatewayUrl =  Environment.GetEnvironmentVariable("APIMGATEWAYURL");
             var gatewayKey =  Environment.GetEnvironmentVariable("APIMKEY");
@@ -38,14 +41,12 @@ namespace Company.Function
             log.LogInformation($"gatewayUrl - {gatewayUrl}");
 
             httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", gatewayKey);
-            httpClient.DefaultRequestHeaders.Add("connector-id", connectorName);
-            httpClient.DefaultRequestHeaders.Add("connection-id", connectionId);
 
-            var connection = await ConnectionManager.GetConnectionAsync(connectorName, connectionId);
+            var connection = await ConnectionManager.GetConnectionAsync(tokenProviderId, connectionId);
 
             if (connection != null && connection.Properties.Status.ToUpper().Equals("CONNECTED")) 
             {
-                var runtimeURL = $"{gatewayUrl}/{connectorName}/{path}";
+                var runtimeURL = $"{gatewayUrl}/GenericProxy/{backendApi}";
                 log.LogInformation($"Calling Url - {runtimeURL}");
 
                 var httpMethod = new HttpMethod(req.Method);
@@ -61,6 +62,10 @@ namespace Company.Function
                             httpRequestMessage.Content.Headers.TryAddWithoutValidation("Content-Type", "application/json");
                         }
                     }
+
+                   httpRequestMessage.Headers.Add("connector-id", tokenProviderId.ToString());
+                   httpRequestMessage.Headers.Add("connection-id", connectionId);
+                   httpRequestMessage.Headers.Add("backend-host", backendHost.ToString());
 
                     var result = await httpClient.SendAsync(httpRequestMessage);
 
