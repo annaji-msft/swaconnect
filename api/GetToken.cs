@@ -40,7 +40,7 @@ namespace Company.Function
 
             if (connection != null && connection.Properties.Status.ToUpper().Equals("CONNECTED")) 
             {
-                var runtimeURL = $"{gatewayUrl}/GenericProxy/GetToken";
+                var runtimeURL = $"{gatewayUrl}/GenericProxy/tokem";
                 log.LogInformation($"Calling Url - {runtimeURL}");
 
                 var httpMethod = new HttpMethod(req.Method);
