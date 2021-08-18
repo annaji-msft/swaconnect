@@ -28,6 +28,7 @@ namespace Company.Function
             log.LogInformation($"principalId - {principalId}");
             log.LogInformation($"swaurl - {swaUrl}");
             log.LogInformation($"redirecturl - {redirectUrl}");
+             log.LogInformation($"connectorId - {tokenProviderId}");
             
             ApiConnectionResource connection = null;
 
