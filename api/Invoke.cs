@@ -31,9 +31,9 @@ namespace Company.Function
 
             string path = req.Query["path"];
             log.LogInformation($"path - {path}");
-            
-            var gatewayUrl =  "https://anganti-preview.azure-api.net"; //Environment.GetEnvironmentVariable("APIMGATEWAYURL");
-            var gatewayKey = "870c0c7719fb497aa9b31ea5a14ff22f"; //Environment.GetEnvironmentVariable("APIMKEY");
+                
+            var gatewayUrl =  Environment.GetEnvironmentVariable("APIMGATEWAYURL");
+            var gatewayKey =  Environment.GetEnvironmentVariable("APIMKEY");
 
             log.LogInformation($"gatewayUrl - {gatewayUrl}");
 
