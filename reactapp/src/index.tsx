@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Providers, ProxyProvider, ProviderState} from '@microsoft/mgt';
-import { Login } from '@microsoft/mgt-react';
+import { Providers, ProviderState } from '@microsoft/mgt-element';
+import { ProxyProvider } from '@microsoft/mgt-proxy-provider';
 
 let provider = new ProxyProvider("/api/proxy", async () => {
   return {
@@ -13,9 +13,8 @@ let provider = new ProxyProvider("/api/proxy", async () => {
   };
 });
 
-provider.login = () => 
-{ 
-  provider.graph
+provider.login = async  () => { 
+  return provider.graph
       .api('me')
       .get()
       .then(
@@ -32,15 +31,15 @@ provider.login = () =>
       );
 };
 
-provider.logout = () => { 
-  provider.setState(ProviderState.SignedIn); 
+provider.logout = async  () => { 
+  
 };
+
 
 Providers.globalProvider = provider;
 
 ReactDOM.render(
   <React.StrictMode>
-    <Login />
     <App />
   </React.StrictMode>,
   document.getElementById('root')
