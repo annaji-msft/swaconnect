@@ -14,7 +14,7 @@ class Graph extends React.Component {
   componentDidMount() {
     axios.get('/api/.token/status/graph')
       .then(response => {
-        if(response && response == 'connected') {
+        if(response && response === 'CONNECTED') {
           this.setState({ connected: true })
          }
       });
@@ -64,15 +64,15 @@ class Graph extends React.Component {
                maxWidth: "50px"
              }}>
 
-               <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected == true} >
+               <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected === true} >
                  Create
                </DefaultButton>
 
-               <DefaultButton iconProps={{ iconName: 'PlugDisconnected' }} onClick={this.delete}  disabled={this.state.connected == false}>
+               <DefaultButton iconProps={{ iconName: 'PlugDisconnected' }} onClick={this.delete}  disabled={this.state.connected === false}>
                  Delete
                </DefaultButton>
 
-               <DefaultButton iconProps={{ iconName: 'AzureKeyVault' }} onClick={this.getToken}  disabled={this.state.connected == false} >
+               <DefaultButton iconProps={{ iconName: 'AzureKeyVault' }} onClick={this.getToken}  disabled={this.state.connected === false} >
                  Display
                </DefaultButton>
 
