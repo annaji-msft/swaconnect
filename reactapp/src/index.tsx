@@ -6,37 +6,12 @@ import reportWebVitals from './reportWebVitals';
 import { Providers, ProviderState } from '@microsoft/mgt-element';
 import { ProxyProvider } from '@microsoft/mgt-proxy-provider';
 
-let provider = new ProxyProvider("/api/proxy", async () => {
+Providers.globalProvider = new ProxyProvider("/api/proxy", async () => {
   return {
     "X-MS-TOKENPROVIDER-ID": 'graph',
     "X-MS-PROXY-BACKEND-HOST": 'https://graph.microsoft.com'
   };
 });
-
-provider.login = async  () => { 
-  return provider.graph
-      .api('me')
-      .get()
-      .then(
-        user => {
-          if (user != null) {
-            provider.setState(ProviderState.SignedIn);
-          } else {
-            provider.setState(ProviderState.SignedOut);
-          }
-        },
-        err => {
-          provider.setState(ProviderState.SignedOut);
-        }
-      );
-};
-
-provider.logout = async  () => { 
-  
-};
-
-
-Providers.globalProvider = provider;
 
 ReactDOM.render(
   <React.StrictMode>
