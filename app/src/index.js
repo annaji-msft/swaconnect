@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Providers, ProxyProvider} from '@microsoft/mgt-react';
+import {Providers, ProxyProvider} from '@microsoft/mgt';
 
 let provider = new ProxyProvider("/api/proxy", async () => {
   return {
     "X-MS-TOKENPROVIDER-ID": 'graph',
-    "X-MS-PROXY-BACKEND-HOST": 'https://graph.microsoft.com/v1.0'
+    "X-MS-PROXY-BACKEND-HOST": 'https://graph.microsoft.com'
   };
 });
 
