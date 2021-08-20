@@ -29,7 +29,8 @@ class Graph extends React.Component {
         && error.response.status === 401
         && error.response) {
         // Initiate consent flow with redirect url.
-        window.location.href = error.response;
+        window.location.href = error.response
+        return true;
       } else {
         alert(error);
       }
@@ -57,7 +58,7 @@ class Graph extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>Graph Token</Label>
+      <Label>Graph Token: {this.state.connected} </Label>
          <Stack verticalAlign tokens={{
                childrenGap: 5,
                padding: 5,
