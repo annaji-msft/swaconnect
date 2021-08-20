@@ -1,4 +1,4 @@
-{ 
+{
     "routes" : [
         {
             "route": "/api/*",
@@ -16,5 +16,8 @@
             "route": "/logout",
             "redirect": "/.auth/logout"
         }
-    ]
+    ],
+    "navigationFallback": {
+        "rewrite": "/index.html"
+    }
 }
