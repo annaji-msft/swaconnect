@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { DefaultButton, ThemeProvider, initializeIcons, Stack, Label } from '@fluentui/react';
 
-import Graph from './Graph'
+import Connect from './Connect'
 
 class App extends React.Component {
   constructor(props) {
@@ -52,7 +52,7 @@ class App extends React.Component {
              <br />
              <br />
              {this.state.userId !== undefined 
-             && <Graph />}
+             && <div><Connect name="graph"/><Connect name="dropbox"/><Connect name="google"/></div>}
        </ThemeProvider>
        </header>
        </div>);

@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import { DefaultButton, ThemeProvider, Stack, Label } from '@fluentui/react';
+import { DefaultButton, ThemeProvider, Stack, Label, TextField } from '@fluentui/react';
 
-class Graph extends React.Component {
+class Connect extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +12,7 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/.token/status/graph')
+    axios.get(`/api/.token/status/${this.props.name}`)
       .then(response => {
         if(response && response === 'CONNECTED') {
           this.setState({ connected: true })
@@ -21,7 +21,7 @@ class Graph extends React.Component {
   }
 
   create = () => {
-    axios.post("/api/.token/create/graph")
+    axios.post(`/api/.token/create/${this.props.name}`)
     .then(() => {
       this.setState({ connected: true });
     }).catch((error) => {
@@ -30,7 +30,7 @@ class Graph extends React.Component {
         && error.response) {
         // Initiate consent flow with redirect url.
         window.location.href = error.response
-        return true;
+        return false;
       } else {
         alert(error);
       }
@@ -38,7 +38,7 @@ class Graph extends React.Component {
   }
 
   delete = () => {
-    axios.post("/api/.token/delete/graph")
+    axios.post(`/api/.token/delete/${this.props.name}`)
       .then(() => {
         this.setState({ connected: false });
       }).catch((error) => {
@@ -47,7 +47,7 @@ class Graph extends React.Component {
   }
 
   getToken = () => {
-    axios.get("/api/.token/graph")
+    axios.get(`/api/.token/${this.props.name}`)
     .then((token) => {
       this.setState({ token: token });
     }).catch((error) => {
@@ -58,7 +58,7 @@ class Graph extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>Graph Token: {this.state.connected} </Label>
+      <Label>${this.props.name} token: {this.state.connected} </Label>
          <Stack verticalAlign tokens={{
                childrenGap: 5,
                padding: 5,
@@ -78,11 +78,10 @@ class Graph extends React.Component {
                </DefaultButton>
 
              </Stack>
-
-             <Label>{this.state.token}</Label>
+             <TextField label="Non-resizable" multiline autoAdjustHeight>{this.state.token}</TextField>
        </ThemeProvider>
        </div>);
     }
   }
 
-export default Graph;
+export default Connect;
