@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Providers, ProxyProvider, ProviderState} from '@microsoft/mgt';
+import { Login } from '@microsoft/mgt-react';
 
 let provider = new ProxyProvider("/api/proxy", async () => {
   return {
@@ -12,15 +13,34 @@ let provider = new ProxyProvider("/api/proxy", async () => {
   };
 });
 
-provider.login = () => { provider.setState(ProviderState.SignedIn); };
-provider.logout = () => { provider.setState(ProviderState.SignedIn); };
+provider.login = () => 
+{ 
+  provider.graph
+      .api('me')
+      .get()
+      .then(
+        user => {
+          if (user != null) {
+            provider.setState(ProviderState.SignedIn);
+          } else {
+            provider.setState(ProviderState.SignedOut);
+          }
+        },
+        err => {
+          provider.setState(ProviderState.SignedOut);
+        }
+      );
+};
+
+provider.logout = () => { 
+  provider.setState(ProviderState.SignedIn); 
+};
 
 Providers.globalProvider = provider;
 
-Providers.globalProvider.setState(ProviderState.SignedIn);
-
 ReactDOM.render(
   <React.StrictMode>
+    <Login />
     <App />
   </React.StrictMode>,
   document.getElementById('root')
