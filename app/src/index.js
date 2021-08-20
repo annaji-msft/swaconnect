@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Providers, ProxyProvider} from '@microsoft/mgt';
+import {Providers, ProxyProvider} from '@microsoft/mgt-react';
 
 let provider = new ProxyProvider("/api/proxy", async () => {
   return {
