@@ -14,9 +14,7 @@ Providers.globalProvider = new ProxyProvider("/api/proxy", async () => {
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <App />,
   document.getElementById('root')
 );
 
