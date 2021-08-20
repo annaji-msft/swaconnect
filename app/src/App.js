@@ -1,5 +1,5 @@
 import './App.css';
-import { Login, Person, Todo } from '@microsoft/mgt-react';
+import { Person, Todo } from '@microsoft/mgt-react';
 
 function App() {
   return (
@@ -9,7 +9,6 @@ function App() {
         <a className="App-link" href="/logout"> Logout</a>
       </header>
       <body>
-        <Login />
         <Person personQuery="me" personCardInteraction="hover" showPresence="true" view="twolines" />
         <Todo />
       </body>

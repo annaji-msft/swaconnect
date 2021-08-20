@@ -13,9 +13,11 @@ let provider = new ProxyProvider("/api/proxy", async () => {
 });
 
 provider.login = () => { provider.setState(ProviderState.SignedIn); };
-provider.logout = () => { provider.setState(ProviderState.SignedOut); };
+provider.logout = () => { provider.setState(ProviderState.SignedIn); };
 
 Providers.globalProvider = provider;
+
+Providers.globalProvider.setState(ProviderState.SignedIn);
 
 ReactDOM.render(
   <React.StrictMode>
