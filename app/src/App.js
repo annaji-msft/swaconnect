@@ -1,5 +1,5 @@
 import './App.css';
-import { Person, Todo } from '@microsoft/mgt-react';
+import { Person, Get , PersonCard} from '@microsoft/mgt-react';
 
 function App() {
   return (
@@ -10,7 +10,15 @@ function App() {
       </header>
       <body>
         <Person personQuery="me" personCardInteraction="hover" showPresence="true" view="twolines" />
-        <Todo />
+        <Get resource="me">
+          <template>
+            <Get resource="users/{{id}}/photo/$value" type="image">
+              <template>
+                <PersonCard personDetails="{{$parent}}" personImage="{{image}}"></PersonCard>
+              </template>
+            </Get>
+          </template>
+        </Get>
       </body>
     </div>
   );
