@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import {Providers, ProxyProvider} from '@microsoft/mgt';
+import {Providers, ProxyProvider, ProviderState} from '@microsoft/mgt';
 
 let provider = new ProxyProvider("/api/proxy", async () => {
   return {
@@ -12,8 +12,8 @@ let provider = new ProxyProvider("/api/proxy", async () => {
   };
 });
 
-provider.login = () => { /* will be called when "Sign In" is clicked */ };
-provider.logout = () => { /* will be called when "Sign Out" is called */ };
+provider.login = () => { provider.setState(ProviderState.SignedIn); };
+provider.logout = () => { provider.setState(ProviderState.SignedOut); };
 
 Providers.globalProvider = provider;
 
