@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using MSHA.ApiConnections;
+using Microsoft.AspNetCore.Routing;
 
 namespace Company.Function
 {
@@ -15,13 +16,15 @@ namespace Company.Function
     {
         [FunctionName("Disconnect")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = ".token/delete/{tokenProviderId}")] HttpRequest req,
             ILogger log)
         {
             string responseMessage = JsonConvert.SerializeObject(req.Headers);
             req.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL-ID", out var principalId);
 
-            req.Headers.TryGetValue("X-MS-SWA-TOKENPROVIDER-ID", out var tokenProviderId);
+             var routeData = req.HttpContext.GetRouteData();
+            var tokenProviderId = routeData?.Values["tokenProviderId"]?.ToString();
+            log.LogInformation($"connectorName - {tokenProviderId}");
 
             log.LogInformation($"principalId - {principalId}");
             
@@ -29,6 +32,11 @@ namespace Company.Function
 
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
+
+            if (string.IsNullOrEmpty(connectionId)) 
+            {
+                 return  new ContentResult { StatusCode =  403, Content =  "Please Authenticate!" };
+            }
 
             connection = await ConnectionManager.GetConnectionAsync(tokenProviderId, connectionId);
 

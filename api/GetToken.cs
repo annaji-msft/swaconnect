@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using MSHA.ApiConnections;
+using Microsoft.AspNetCore.Routing;
 
 namespace Company.Function
 {
@@ -16,7 +17,7 @@ namespace Company.Function
     {
         [FunctionName("GetToken")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = ".token/{tokenProviderId}")] HttpRequest req,
             ILogger log)
         {
             var httpClient = new HttpClient();
@@ -26,7 +27,13 @@ namespace Company.Function
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
 
-            req.Headers.TryGetValue("X-MS-SWA-TOKENPROVIDER-ID", out var tokenProviderId);
+            if (string.IsNullOrEmpty(connectionId)) 
+            {
+                 return  new ContentResult { StatusCode =  403, Content =  "Please Authenticate!" };
+            }
+
+            var routeData = req.HttpContext.GetRouteData();
+            var tokenProviderId = routeData?.Values["tokenProviderId"]?.ToString();
             log.LogInformation($"connectorName - {tokenProviderId}");
                 
             var gatewayUrl =  Environment.GetEnvironmentVariable("APIMGATEWAYURL");

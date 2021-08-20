@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { Login } from '@microsoft/mgt-react';
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         <a className="App-link" href="/login"> Login with Google </a>
         <a className="App-link" href="/logout"> Logout</a>
       </header>
+      <body>
+        <Login />
+      </body>
     </div>
   );
 }

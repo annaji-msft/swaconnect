@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http;
 using MSHA.ApiConnections;
+using Microsoft.AspNetCore.Routing;
 
 namespace Company.Function
 {
@@ -16,7 +17,9 @@ namespace Company.Function
     {
         [FunctionName("Proxy")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "patch", "delete", Route = null)] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "put", "patch", "delete",
+             Route = "proxy/{*path}")] 
+            HttpRequest req,
             ILogger log)
         {
             var httpClient = new HttpClient();
@@ -26,13 +29,19 @@ namespace Company.Function
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
 
-            req.Headers.TryGetValue("X-MS-SWA-TOKENPROVIDER-ID", out var tokenProviderId);
+            req.Headers.TryGetValue("X-MS-TOKENPROVIDER-ID", out var tokenProviderId);
             log.LogInformation($"connectorName - {tokenProviderId}");
 
-            req.Headers.TryGetValue("X-MS-SWA-PROXY-BACKEND-HOST", out var backendHost);
+            if (string.IsNullOrEmpty(connectionId)) 
+            {
+                 return  new ContentResult { StatusCode =  403, Content =  "Please authenticate!" };
+            }
+
+            req.Headers.TryGetValue("X-MS-PROXY-BACKEND-HOST", out var backendHost);
             log.LogInformation($"backendHost - {backendHost}");
 
-            req.Headers.TryGetValue("X-MS-SWA-PROXY-BACKEND-API", out var backendApi);
+            var routeData = req.HttpContext.GetRouteData();
+            var backendApi = routeData?.Values["path"]?.ToString();
             log.LogInformation($"backendApi - {backendApi}");
                 
             var gatewayUrl =  Environment.GetEnvironmentVariable("APIMGATEWAYURL");
