@@ -23,7 +23,6 @@ class Connect extends React.Component {
         if(response && response.data === 'CONNECTED') {
           this.setState({ connected: true })
          }
-        
       });
   }
 
