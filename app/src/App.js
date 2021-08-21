@@ -107,7 +107,7 @@ class App extends React.Component {
                 <Token name="google" />
                 <Separator vertical />
               </Stack>
-              <Separator theme={theme}>Option 2: Proxy with token attached</Separator>
+              <Separator theme={theme}>Option 2: Proxy</Separator>
               <Proxy />
               <Separator theme={theme}>Documentation</Separator>
             </div>}
