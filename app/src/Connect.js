@@ -7,16 +7,25 @@ class Connect extends React.Component {
     super(props);
     this.state = {
       connected: false,
-      token: ""
+      token: "",
+      status: ""
     };
   }
 
   componentDidMount() {
     axios.get(`/api/.token/status/${this.props.name}`)
       .then(response => {
-        if(response && response === 'CONNECTED') {
+
+        if(response && response.data !== undefined) {
+          this.setState({ status: response.data })
+        }
+
+        if(response && response.data === 'CONNECTED') {
           this.setState({ connected: true })
          }
+        
+      }).catch((error) => {
+        alert(error);
       });
   }
 
@@ -45,6 +54,15 @@ class Connect extends React.Component {
       });
   }
 
+  status = () => {
+    axios.get(`/api/.token/status/${this.props.name}`)
+      .then((response) => {
+        this.setState({ status: response.data });
+      }).catch((error) => {
+        alert(error);
+      });
+  }
+
   getToken = () => {
     axios.get(`/api/.token/${this.props.name}`)
     .then((token) => {
@@ -57,12 +75,24 @@ class Connect extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>{this.props.name} token: {this.state.connected} </Label>
+      <Label>{this.props.name} token </Label>
+      <Stack horizontal tokens={{
+               childrenGap: 5,
+               padding: 5,
+               maxWidth: "50px"
+             }}>
+                <Label>Status: </Label>
+                <TextField resizable={false} value={this.state.status} />
+             </Stack>
+     
          <Stack verticalAlign tokens={{
                childrenGap: 5,
                padding: 5,
                maxWidth: "50px"
              }}>
+               <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.status} >
+                 Check Status
+               </DefaultButton>
 
                <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected === true} >
                  Create
@@ -77,7 +107,7 @@ class Connect extends React.Component {
                </DefaultButton>
 
              </Stack>
-             <TextField label="Non-resizable" multiline autoAdjustHeight value={this.state.token.data} />
+             <TextField label="Non-resizable" multiline resizable={false} value={this.state.token.data} />
        </ThemeProvider>
        </div>);
     }
