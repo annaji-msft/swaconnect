@@ -14,13 +14,17 @@ const httpMethods = [
     { key: 'DELETE', text: 'DELETE' },
   ];
 
+const defaultMethod = "GET";
+const defaultHeaders = `{"X-MS-TOKENPROVIDER-ID":"graph","X-MS-PROXY-BACKEND-HOST":"https://graph.microsoft.com/v1.0"}`;
+const defaultApiOperation = "me";
+
 class Proxy extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          method: undefined,
-          headers: undefined,
-          apiOperation: undefined,
+          method: defaultMethod,
+          headers: defaultHeaders,
+          apiOperation: defaultApiOperation,
           body: undefined,
           response: undefined
         };
@@ -40,7 +44,7 @@ class Proxy extends React.Component {
             method: this.state.method,
             headers : JSON.parse(this.state.headers)
         }).then((response) => {
-            this.setState({response: response});
+            this.setState({response: JSON.stringify(response.data)});
         }).catch((error) => {
             this.setState({response: error});
         });
@@ -49,23 +53,23 @@ class Proxy extends React.Component {
       render() { 
         return (<div>
           <ThemeProvider>
-          <h2>Proxy</h2>
           <Stack horizontal tokens={{
                childrenGap: "5",
                padding: "5",
              }}>
-             <Dropdown label="Method" onChange={this.methodChanged} options={httpMethods} styles={dropdownStyles} />
-             <TextField label="API Operation" onChange={this.operationChange} width="300"/>
+             <Dropdown label="Method" defaultSelectedKey={defaultMethod} onChange={this.methodChanged} options={httpMethods} styles={dropdownStyles} />
+             <TextField label="API Operation" defaultValue={defaultApiOperation}  onChange={this.operationChange} width="300"/>
             </Stack>
             <Stack horizontal tokens={{
                childrenGap: "5",
                padding: "5",
              }}>
             </Stack>
-            <TextField label="Headers" multiline onChange={this.headersChange} width="300"/>
+            <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300"/>
             <TextField label="Request Body" height="300" multiline onChange={this.bodyChange} width="300"/>
             <TextField label="Response Body" multiline value={this.state.response} width="100"/>
-            <PrimaryButton text="Send" label="Send" onClick={this.sendRequest} />
+            <br />
+            <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
           </ThemeProvider>
           </div>)
       }

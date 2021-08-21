@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { DefaultButton, ThemeProvider, Stack, Label, TextField } from '@fluentui/react';  
+import { DefaultButton, ThemeProvider, Stack, Label } from '@fluentui/react';  
 
 class Connect extends React.Component {
   constructor(props) {
@@ -72,7 +72,7 @@ class Connect extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>{this.props.name} token </Label>
+      <Label>{this.props.name}</Label>
          <Stack verticalAlign tokens={{
                childrenGap: "l2",
                padding: "l2"
@@ -91,7 +91,6 @@ class Connect extends React.Component {
                </DefaultButton>
 
              </Stack>
-             <TextField label="Token" multiline resizable={false} value={this.state.token.data} />
        </ThemeProvider>
        </div>);
     }

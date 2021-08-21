@@ -7,10 +7,22 @@ import {
   Stack, 
   Label, 
   Text,
-  Toggle} from '@fluentui/react';
+  Toggle,
+  Separator} from '@fluentui/react';
+import { createTheme } from '@fluentui/react/lib/Styling';
 
-import Connect from './Connect'
-import Proxy from './Proxy'
+import Connect from './Connect';
+import Proxy from './Proxy';
+import Token from './Token';
+
+const theme = createTheme({
+  fonts: {
+    medium: {
+      fontFamily: 'Monaco, Menlo, Consolas',
+      fontSize: '20px',
+    },
+  },
+});
 
 class App extends React.Component {
   constructor(props) {
@@ -38,6 +50,7 @@ class App extends React.Component {
     return (<div>
       <header>
         <h3>#EasyTokens - Service integrations made simple!</h3>
+        <Separator theme={theme}>Step 1: Login</Separator>
         <Label>Let's get started, please Login with one of the authentication providers! </Label>
         <ThemeProvider>
           <Stack horizontal tokens={{
@@ -71,23 +84,40 @@ class App extends React.Component {
           <br />
           {this.state.userId !== undefined
             && <div>
+              <Separator theme={theme}>Step 2: Manage Tokens</Separator>
               <Stack horizontal tokens={{
                 childrenGap: 10,
                 padding: 10,
               }}>
-                
                 <Connect name="graph" />
+                <Separator vertical />
                 <Connect name="dropbox" />
+                <Separator vertical />
                 <Connect name="google" />
+                <Separator vertical />
               </Stack>
+              <Separator theme={theme}>Option 1: Retrieve Token</Separator>
+              <Stack horizontal tokens={{
+                childrenGap: 10,
+                padding: 10,
+              }}>
+                <Token name="graph" />
+                <Separator vertical />
+                <Token name="dropbox" />
+                <Separator vertical />
+                <Token name="google" />
+                <Separator vertical />
+              </Stack>
+              <Separator theme={theme}>Option 2: Proxy with token attached</Separator>
               <Proxy />
+              <Separator theme={theme}>Documentation</Separator>
             </div>}
         </ThemeProvider>
       </header>
     
       {this.state.userId !== undefined
         && <div>
-          <Toggle label="Documentation" onText="show" offText="hide" onChange={this.documentationToggle} />
+          <Toggle onText="show" offText="hide" onChange={this.documentationToggle} />
         </div>
       }
       { this.state.showDocs === true &&
