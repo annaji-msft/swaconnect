@@ -50,8 +50,9 @@ class App extends React.Component {
              </Stack>
              {this.state.userId !== undefined 
              && <div><Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}"  Let's connect to some services ...</Label>
-             <Label>The created tokens will be stored under your logged in identity. You will be able to retrieve them and delete them in future.</Label>
+             <br />
              <h3 style={{ color: 'red' }}>ALERT - TRY NOT TO USE YOUR PERSONAL IDENTITY. USE A TEST ACCOUNT IF POSSIBLE (or) DELETE THE TOKEN AFTER USE</h3>
+             <Label>Tokens created will be stored under your logged in identity. You will be able to retrieve them and delete them in future.</Label>
              </div> }
              <br />
              <br />

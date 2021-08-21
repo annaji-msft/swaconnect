@@ -24,8 +24,6 @@ class Connect extends React.Component {
           this.setState({ connected: true })
          }
         
-      }).catch((error) => {
-        alert(error);
       });
   }
 
