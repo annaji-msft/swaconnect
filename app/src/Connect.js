@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { DefaultButton, ThemeProvider, Stack, Label, TextField } from '@fluentui/react';
+import { DefaultButton, ThemeProvider, Stack, Label, TextField } from '@fluentui/react';  
 
 class Connect extends React.Component {
   constructor(props) {
@@ -29,8 +29,7 @@ class Connect extends React.Component {
         && error.response.status === 401
         && error.response) {
         // Initiate consent flow with redirect url.
-        window.location.href = error.response
-        return false;
+        window.location.replace(error.response);
       } else {
         alert(error);
       }
@@ -58,7 +57,7 @@ class Connect extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>${this.props.name} token: {this.state.connected} </Label>
+      <Label>{this.props.name} token: {this.state.connected} </Label>
          <Stack verticalAlign tokens={{
                childrenGap: 5,
                padding: 5,
@@ -78,7 +77,7 @@ class Connect extends React.Component {
                </DefaultButton>
 
              </Stack>
-             <TextField label="Non-resizable" multiline autoAdjustHeight>{this.state.token}</TextField>
+             <TextField label="Non-resizable" multiline autoAdjustHeight value={this.state.token} />
        </ThemeProvider>
        </div>);
     }

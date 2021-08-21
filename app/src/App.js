@@ -52,7 +52,16 @@ class App extends React.Component {
              <br />
              <br />
              {this.state.userId !== undefined 
-             && <div><Connect name="graph"/><Connect name="dropbox"/><Connect name="google"/></div>}
+             && <div>
+                <Stack horizontal tokens={{
+               childrenGap: 10,
+               padding: 10,
+                }}>
+               <Connect name="graph"/>
+               <Connect name="dropbox"/>
+               <Connect name="google"/>
+                </Stack>
+               </div>}
        </ThemeProvider>
        </header>
        </div>);
