@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {ThemeProvider, Stack, Label, TextField, PrimaryButton } from '@fluentui/react';  
+import {ThemeProvider, Stack, Label, TextField, PrimaryButton, DefaultButton } from '@fluentui/react';  
 
 class Token extends React.Component {
   constructor(props) {
@@ -26,6 +26,10 @@ class Token extends React.Component {
     });
   }
 
+  clear = () => {
+    this.setState({ token: "" });
+  }
+
   render() { 
     return (<div>
       <ThemeProvider>
@@ -37,6 +41,9 @@ class Token extends React.Component {
                <PrimaryButton iconProps={{ iconName: 'AzureKeyVault' }} onClick={this.getToken} >
                  Display
                </PrimaryButton>
+               <DefaultButton iconProps={{ iconName: 'Cancel' }} onClick={this.clear} >
+                 Clear
+               </DefaultButton>
              </Stack>
              <TextField label="Token" multiline resizable={false} value={this.state.token.data} />
        </ThemeProvider>

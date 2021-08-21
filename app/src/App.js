@@ -78,13 +78,13 @@ class App extends React.Component {
             && <div>
               <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}"</Label>
               <br />
-              <h3 style={{ color: 'red' }}>ALERT - TRY NOT TO USE YOUR PERSONAL ACCOUNTS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h3>
               <Label>Tokens created will be stored under logged in identity. Tokens can be later retrieved and also deleted.</Label>
             </div>}
           <br />
           {this.state.userId !== undefined
             && <div>
               <Separator theme={theme}>Step 2: Manage Tokens</Separator>
+              <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
               <Stack horizontal tokens={{
                 childrenGap: 10,
                 padding: 10,
