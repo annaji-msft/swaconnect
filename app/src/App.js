@@ -51,7 +51,6 @@ class App extends React.Component {
       <header>
         <h3>#EasyTokens - Service integrations made simple!</h3>
         <Separator theme={theme}>Step 1: Login</Separator>
-        <Label>Let's get started, please Login with one of the authentication providers! </Label>
         <ThemeProvider>
           <Stack horizontal tokens={{
             childrenGap: 10,
@@ -73,12 +72,12 @@ class App extends React.Component {
               Logout
             </DefaultButton>
           </Stack>
+          <Label>Token's will be stored and managed under logged in identity.</Label>
           <br />
           {this.state.userId !== undefined
             && <div>
               <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}"</Label>
               <br />
-              <Label>Tokens created will be stored under logged in identity. Tokens can be later retrieved and also deleted.</Label>
             </div>}
           <br />
           {this.state.userId !== undefined
@@ -109,9 +108,10 @@ class App extends React.Component {
                 <Separator vertical />
               </Stack>
               <Separator theme={theme}>Option 2: Proxy with token attached</Separator>
-              <Proxy />
+             
               <Separator theme={theme}>Documentation</Separator>
             </div>}
+            <Proxy />
         </ThemeProvider>
       </header>
     

@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack} from '@fluentui/react'; 
+import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack, Pivot, PivotItem, Label, Separator} from '@fluentui/react'; 
 
 const dropdownStyles = {
     dropdown: { width: 100 }
@@ -42,7 +42,8 @@ class Proxy extends React.Component {
         axios.request({
             url: `/api/proxy/${this.state.apiOperation}`,
             method: this.state.method,
-            headers : JSON.parse(this.state.headers)
+            headers : JSON.parse(this.state.headers),
+            data: JSON.parse(this.state.body)
         }).then((response) => {
             this.setState({response: JSON.stringify(response.data)});
         }).catch((error) => {
@@ -53,6 +54,7 @@ class Proxy extends React.Component {
       render() { 
         return (<div>
           <ThemeProvider>
+          <Separator>Request</Separator>
           <Stack horizontal tokens={{
                childrenGap: "5",
                padding: "5",
@@ -65,9 +67,20 @@ class Proxy extends React.Component {
                padding: "5",
              }}>
             </Stack>
-            <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300"/>
-            <TextField label="Request Body" height="300" multiline onChange={this.bodyChange} width="300"/>
-            <TextField label="Response Body" multiline value={this.state.response} width="100"/>
+            <Pivot>
+                <PivotItem headerText="Headers">
+                    <TextField defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300"/>
+                </PivotItem>
+                <PivotItem headerText="Body">
+                    <TextField height="300" multiline onChange={this.bodyChange} width="300"/>
+                </PivotItem>
+            </Pivot>
+            <Separator>Response</Separator>
+            <Pivot>
+                <PivotItem headerText="Body">
+                    <TextField label="Response Body" readOnly multiline value={this.state.response} width="100"/>
+                </PivotItem>
+            </Pivot>
             <br />
             <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
           </ThemeProvider>

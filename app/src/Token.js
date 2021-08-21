@@ -45,7 +45,7 @@ class Token extends React.Component {
                  Clear
                </DefaultButton>
              </Stack>
-             <TextField label="Token" multiline resizable={false} value={this.state.token.data} />
+             <TextField type="password" canRevealPassword label="Token" multiline resizable={true} value={this.state.token.data} />
        </ThemeProvider>
        </div>);
     }
