@@ -29,7 +29,7 @@ class Connect extends React.Component {
         && error.response.status === 401
         && error.response) {
         // Initiate consent flow with redirect url.
-        window.location.replace(error.response);
+        window.location.replace(error.response.data);
       } else {
         alert(error);
       }
@@ -77,7 +77,7 @@ class Connect extends React.Component {
                </DefaultButton>
 
              </Stack>
-             <TextField label="Non-resizable" multiline autoAdjustHeight value={this.state.token} />
+             <TextField label="Non-resizable" multiline autoAdjustHeight value={this.state.token.data} />
        </ThemeProvider>
        </div>);
     }
