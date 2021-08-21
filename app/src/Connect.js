@@ -76,23 +76,10 @@ class Connect extends React.Component {
     return (<div>
       <ThemeProvider>
       <Label>{this.props.name} token </Label>
-      <Stack horizontal tokens={{
-               childrenGap: 5,
-               padding: 5,
-               maxWidth: "50px"
-             }}>
-                <Label>Status: </Label>
-                <TextField resizable={false} value={this.state.status} />
-             </Stack>
-     
          <Stack verticalAlign tokens={{
-               childrenGap: 5,
-               padding: 5,
-               maxWidth: "50px"
+               childrenGap: "l2",
+               padding: "l2"
              }}>
-               <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.status} >
-                 Check Status
-               </DefaultButton>
 
                <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected === true} >
                  Create
@@ -107,7 +94,7 @@ class Connect extends React.Component {
                </DefaultButton>
 
              </Stack>
-             <TextField label="Non-resizable" multiline resizable={false} value={this.state.token.data} />
+             <TextField label="Token" multiline resizable={false} value={this.state.token.data} />
        </ThemeProvider>
        </div>);
     }
