@@ -86,10 +86,6 @@ class Connect extends React.Component {
                  Delete
                </DefaultButton>
 
-               <DefaultButton iconProps={{ iconName: 'AzureKeyVault' }} onClick={this.getToken}  disabled={this.state.connected === false} >
-                 Display
-               </DefaultButton>
-
              </Stack>
        </ThemeProvider>
        </div>);

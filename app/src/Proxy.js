@@ -39,12 +39,23 @@ class Proxy extends React.Component {
       bodyChange = (ev, text) => { this.setState({body : text}); };
 
       sendRequest = () => { 
-        axios.request({
+        let config = null;
+        if(this.state.body) {
+          config = {
             url: `/api/proxy/${this.state.apiOperation}`,
             method: this.state.method,
             headers : JSON.parse(this.state.headers),
             data: JSON.parse(this.state.body)
-        }).then((response) => {
+          };
+        } else {
+          config = {
+            url: `/api/proxy/${this.state.apiOperation}`,
+            method: this.state.method,
+            headers : JSON.parse(this.state.headers),
+          };
+        }
+        
+        axios.request(config).then((response) => {
             this.setState({response: JSON.stringify(response.data)});
         }).catch((error) => {
             this.setState({response: error});
