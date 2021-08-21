@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack, Pivot, PivotItem, Label, Separator} from '@fluentui/react'; 
+import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack, Pivot, PivotItem, Separator} from '@fluentui/react'; 
 
 const dropdownStyles = {
     dropdown: { width: 100 }
