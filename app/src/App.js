@@ -75,12 +75,13 @@ class App extends React.Component {
                 childrenGap: 10,
                 padding: 10,
               }}>
+                
                 <Connect name="graph" />
                 <Connect name="dropbox" />
                 <Connect name="google" />
               </Stack>
+              <Proxy />
             </div>}
-            <Proxy />
         </ThemeProvider>
       </header>
     
