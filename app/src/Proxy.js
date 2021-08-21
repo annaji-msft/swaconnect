@@ -73,27 +73,21 @@ class Proxy extends React.Component {
              <Dropdown label="Method" defaultSelectedKey={defaultMethod} onChange={this.methodChanged} options={httpMethods} styles={dropdownStyles} />
              <TextField label="API Operation" defaultValue={defaultApiOperation}  onChange={this.operationChange} width="300"/>
             </Stack>
-            <Stack horizontal tokens={{
+            <Stack verticalAlign tokens={{
                childrenGap: "5",
                padding: "5",
-             }}>
+             }}>  
             </Stack>
-            <Pivot>
-                <PivotItem headerText="Headers">
-                    <TextField defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300"/>
-                </PivotItem>
-                <PivotItem headerText="Body">
-                    <TextField height="300" multiline onChange={this.bodyChange} width="300"/>
-                </PivotItem>
-            </Pivot>
+            <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300"/>
+            <TextField label="Body" height="300" multiline onChange={this.bodyChange} width="300"/>
+            <br />
+            <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
             <Separator>Response</Separator>
             <Pivot>
                 <PivotItem headerText="Body">
-                    <TextField label="Response Body" readOnly multiline value={this.state.response} width="100"/>
+                    <TextField readOnly multiline value={this.state.response} width="100"/>
                 </PivotItem>
             </Pivot>
-            <br />
-            <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
           </ThemeProvider>
           </div>)
       }
