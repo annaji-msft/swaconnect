@@ -108,10 +108,9 @@ class App extends React.Component {
                 <Separator vertical />
               </Stack>
               <Separator theme={theme}>Option 2: Proxy with token attached</Separator>
-             
+              <Proxy />
               <Separator theme={theme}>Documentation</Separator>
             </div>}
-            <Proxy />
         </ThemeProvider>
       </header>
     
