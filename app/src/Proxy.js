@@ -101,13 +101,13 @@ class Proxy extends React.Component {
         <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} required />
         <TextField label="Body" height="300" multiline onChange={this.bodyChange} width="300" />
         <br />
-        <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
         <Separator>Response</Separator>
         <Pivot>
           <PivotItem headerText="Body">
             <TextField readOnly multiline value={this.state.response} width="100" />
           </PivotItem>
         </Pivot>
+        <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
       </ThemeProvider>
     </div>)
   }
