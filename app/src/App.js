@@ -1,14 +1,15 @@
 import React from 'react';
 import axios from 'axios';
-import { 
-  DefaultButton, 
-  ThemeProvider, 
-  initializeIcons, 
-  Stack, 
-  Label, 
+import {
+  DefaultButton,
+  ThemeProvider,
+  initializeIcons,
+  Stack,
+  Label,
   Text,
   Toggle,
-  Separator} from '@fluentui/react';
+  Separator
+} from '@fluentui/react';
 import { createTheme } from '@fluentui/react/lib/Styling';
 
 import Connect from './Connect';
@@ -30,7 +31,9 @@ class App extends React.Component {
     this.state = {
       userId: undefined,
       identityProvider: undefined,
-      showDocs: false
+      showDocs: false,
+      showGetToken: false,
+      showProxy: false
     };
     initializeIcons();
   }
@@ -44,12 +47,16 @@ class App extends React.Component {
       })
   }
 
-  documentationToggle = (ev, checked) => { this.setState({showDocs: checked}); };
+  documentationToggle = (ev, checked) => { this.setState({ showDocs: checked }); };
+
+  tokenSectionToggle = (ev, checked) => { this.setState({ showGetToken: checked }); };
+
+  proxySectionToggle = (ev, checked) => { this.setState({ showProxy: checked }); };
 
   render() {
     return (<div>
       <header>
-        <h3>#EasyTokens - Service integrations made simple!</h3>
+        <h3>#EasyTokens - Token management just got easy!</h3>
         <Separator theme={theme}>Step 1: Login</Separator>
         <ThemeProvider>
           <Stack horizontal tokens={{
@@ -95,49 +102,75 @@ class App extends React.Component {
                 <Connect name="google" />
                 <Separator vertical />
               </Stack>
-              <Separator theme={theme}>Option 1: Retrieve Token</Separator>
-              <Stack horizontal tokens={{
-                childrenGap: 10,
-                padding: 10,
-              }}>
-                <Token name="graph" />
-                <Separator vertical />
-                <Token name="dropbox" />
-                <Separator vertical />
-                <Token name="google" />
-                <Separator vertical />
-              </Stack>
-              <Separator theme={theme}>Option 2: Proxy</Separator>
-              <Proxy />
-              <Separator theme={theme}>Documentation</Separator>
             </div>}
         </ThemeProvider>
       </header>
-    
+
       {this.state.userId !== undefined
         && <div>
+          <Separator theme={theme}>Option 2: Proxy</Separator>
+          <Toggle onText="show" offText="hide" onChange={this.proxySectionToggle} />
+          <Text>Token gets attached before calling the backend. User's dont see the token on the client-side.</Text>
+        </div>
+      }
+
+      {this.state.showProxy === true
+        && <div>
+          <Proxy />
+        </div>}
+
+        {this.state.userId !== undefined
+        && <div>
+          <Separator theme={theme}>Option 2: Retrieve Token</Separator>
+          <Toggle onText="show" offText="hide" onChange={this.tokenSectionToggle} />
+          <Text>Just give me the token! It's ok if the user's get hold of the token.</Text>
+        </div>
+      }
+
+      {this.state.showGetToken === true
+        && <div>
+          <Stack horizontal tokens={{
+            childrenGap: 10,
+            padding: 10,
+          }}>
+            <Token name="graph" />
+            <Separator vertical />
+            <Token name="dropbox" />
+            <Separator vertical />
+            <Token name="google" />
+            <Separator vertical />
+          </Stack>
+        </div>}
+
+      {this.state.userId !== undefined
+        && <div>
+          <Separator theme={theme}>Documentation</Separator>
           <Toggle onText="show" offText="hide" onChange={this.documentationToggle} />
         </div>
       }
-      { this.state.showDocs === true &&
+      {this.state.showDocs === true &&
         <div>
-        <h3><b>Programatically Managing Tokens: </b></h3>
-        <Label>  Create Token     [Post] '/api/.token/create/#tokenproviderid#'</Label>
-        <Label>      Example      [Post] '/api/.token/create/graph'</Label>
-        <Label>  Delete Token     [Post] '/api/.token/delete/#tokenproviderid#'</Label>
-        <Label>      Example      [Post] '/api/.token/delete/graph'</Label>
-        <Label>  Token Status     [GET]  '/api/.token/status/#tokenproviderid#'</Label>
-        <Label>      Example      [GET]  '/api/.token/status/graph'</Label>
-        <Label>  Retrieve Token   [GET]  '/api/.token/#tokenproviderid#'</Label>
-        <Label>      Example      [GET]  '/api/.token/graph'</Label>
-        <br />
-        <Text block>During the create, user is asked to consent through the standard oauth flow.</Text> 
-        <Text block>Token is not created and saved until the consent is successful. Once the consent flow succeeds, token is now ready for use - "connected"</Text>
-        <Text block>On status "connected". Token is successfully saved and refreshed periodically by the system to keep it alive.</Text>
-        <h4>Don't like projecting token to the client's, got you covered ...</h4>
-        <h3><b>Proxy by Attaching Token: </b></h3>
-        <Label> [GET, PUT, POST, DELETE] '/api/proxy/#api-operation-path#' ; headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Label>
-        <Label> Example - [GET] '/api/proxy/me' ; headers - [X-MS-TOKENPROVIDER-ID: 'graph'] and [X-MS-PROXY-BACKEND-HOST: 'https://graph.microsoft.com/v1.0']</Label>
+          <h3><b>Programatically Managing Tokens: </b></h3>
+          <Text>  Create Token     [Post] '/api/.token/create/#tokenproviderid#'</Text>
+          <Text>      Example      [Post] '/api/.token/create/graph'</Text>
+          <br />
+          <Text>  Delete Token     [Post] '/api/.token/delete/#tokenproviderid#'</Text>
+          <Text>      Example      [Post] '/api/.token/delete/graph'</Text>
+          <br />
+          <Text>  Token Status     [GET]  '/api/.token/status/#tokenproviderid#'</Text>
+          <Text>      Example      [GET]  '/api/.token/status/graph'</Text>
+          <br />
+          <Text>  Retrieve Token   [GET]  '/api/.token/#tokenproviderid#'</Text>
+          <Text>      Example      [GET]  '/api/.token/graph'</Text>
+          <br />
+          <Text block>During the create, user is asked to consent through the standard oauth flow.</Text>
+          <Text block>Token is not created and saved until the consent is successful. Once the consent flow succeeds, token is now ready for use - "connected"</Text>
+          <Text block>On status "connected". Token is successfully saved and refreshed periodically by the system to keep it alive.</Text>
+          <h4>Don't like projecting token to the client's, got you covered ...</h4>
+          <h3><b>Proxy by Attaching Token: </b></h3>
+          <Text> [GET, PUT, POST, DELETE] '/api/proxy/#api-operation-path#' ; headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Text>
+          <Text> Example - [GET] '/api/proxy/me' ; headers - [X-MS-TOKENPROVIDER-ID: 'graph'] and [X-MS-PROXY-BACKEND-HOST: 'https://graph.microsoft.com/v1.0']</Text>
+          <br />
         </div>
       }
     </div>);
