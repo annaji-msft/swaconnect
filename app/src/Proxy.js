@@ -107,6 +107,7 @@ class Proxy extends React.Component {
             <TextField readOnly multiline value={this.state.response} width="100" />
           </PivotItem>
         </Pivot>
+        <br />
         <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
       </ThemeProvider>
     </div>)
