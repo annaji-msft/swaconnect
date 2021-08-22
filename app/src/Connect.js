@@ -48,14 +48,24 @@ class Connect extends React.Component {
         if(response.data !== undefined) {
           this.setState({ status: response.data });
           if(response.data === 'CONNECTED') {
-            this.setState({ connected: true });
+            this.setState({ connected: true, status: "Created!" });
           }
-        }
-        if(response.status === 404) {
-          this.setState({ status: "NOT FOUND" });
         }
       }
     }).catch((error) => {
+      if(error && error.response && error.response.status){
+        if(error.response.status === 404) {
+          this.setState({ status: "Not Found!" });
+        }
+
+        if(error.response.status === 403) {
+          this.setState({ status: "Forbidden!" });
+        }
+
+        if(error.response.status === 401) {
+          this.setState({ status: "Incomplete!" });
+        }
+      }
       console.log(error);
     });
   }
