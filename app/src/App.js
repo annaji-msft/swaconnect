@@ -75,9 +75,15 @@ class App extends React.Component {
             <DefaultButton href="/.auth/logout" disabled={this.state.userId === undefined}>
               Logout
             </DefaultButton>
-            {this.state.userId === undefined
+            {this.state.userId !== undefined
             && <div>
               <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
+              <Label>Token's are managed under logged in identity by the system.</Label>
+              <br />
+            </div>}
+            {this.state.userId === undefined
+            && <div>
+              <Label>Please login to get started!</Label>
               <Label>Token's are managed under logged in identity by the system.</Label>
               <br />
             </div>}
