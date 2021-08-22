@@ -93,7 +93,7 @@ class App extends React.Component {
             && <div>
               <Separator theme={theme}>Step 2: Manage Tokens</Separator>
               <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
-              <Stack horizontal tokens={{
+              <Stack horizontal horizontalAlign="center" tokens={{
                 childrenGap: 10,
                 padding: 10,
               }}>
@@ -110,8 +110,13 @@ class App extends React.Component {
         {this.state.userId !== undefined
           && <div>
             <Separator theme={theme}>Option 1: Proxy</Separator>
+            <Stack horizontal horizontalAlign="center" tokens={{
+              childrenGap: 10,
+              padding: 10,
+            }}>
             <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
             <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
+            </Stack>
           </div>
         }
         {this.state.userId !== undefined && this.state.showProxy === true
@@ -123,14 +128,19 @@ class App extends React.Component {
         {this.state.userId !== undefined
           && <div>
             <Separator theme={theme}>Option 2: Retrieve Token</Separator>
-            <Toggle defaultChecked onText="show" offText="hide" onChange={this.tokenSectionToggle} />
-            <Text>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Text>
+            <Stack horizontal horizontalAlign="center" tokens={{
+              childrenGap: 10,
+              padding: 10,
+            }}>
+              <Toggle defaultChecked onText="show" offText="hide" onChange={this.tokenSectionToggle} />
+              <Text>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Text>
+            </Stack>
           </div>
         }
 
         { this.state.userId !== undefined && this.state.showGetToken === true
           && <div>
-            <Stack horizontal tokens={{
+            <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
             }}>
