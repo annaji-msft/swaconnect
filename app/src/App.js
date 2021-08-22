@@ -98,7 +98,7 @@ class App extends React.Component {
               </div>}
           </Stack>
           <br />
-          {this.state.userId !== undefined
+          {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
             && <div>
               <Separator theme={theme}>Step 2: Manage Tokens</Separator>
               <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
@@ -106,17 +106,17 @@ class App extends React.Component {
                 childrenGap: 10,
                 padding: 10,
               }}>
-                <Connect name="graph" />
-                <Separator vertical />
-                <Connect name="dropbox" />
-                <Separator vertical />
-                <Connect name="google" />
-                <Separator vertical />
+                {this.state.supportedTokenProviders.map((item)=>{
+                  return <div>
+                     <Connect name={item} />
+                     <Separator vertical />
+                  </div>
+                })}
               </Stack>
             </div>}
         </header>
         <br />
-        {this.state.userId !== undefined
+        {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Option 1: Proxy</Separator>
             <Stack horizontal horizontalAlign="center" tokens={{
@@ -128,13 +128,13 @@ class App extends React.Component {
             </Stack>
           </div>
         }
-        {this.state.userId !== undefined && this.state.showProxy === true
+        {this.state.userId !== undefined && this.state.showProxy === true  && this.state.supportedTokenProviders !== undefined
           && <div>
             <Proxy />
           </div>}
 
         <br />
-        {this.state.userId !== undefined
+        {this.state.userId !== undefined  && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Option 2: Retrieve Token</Separator>
             <Stack horizontal horizontalAlign="center" tokens={{
@@ -147,23 +147,23 @@ class App extends React.Component {
           </div>
         }
 
-        {this.state.userId !== undefined && this.state.showGetToken === true
+        {this.state.userId !== undefined && this.state.showGetToken === true  && this.state.supportedTokenProviders !== undefined
           && <div>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
             }}>
-              <Token name="graph" />
-              <Separator vertical />
-              <Token name="dropbox" />
-              <Separator vertical />
-              <Token name="google" />
-              <Separator vertical />
+               {this.state.supportedTokenProviders.map((item)=>{
+                  return <div>
+                     <Token name={item} />
+                     <Separator vertical />
+                  </div>
+                })}
             </Stack>
           </div>}
 
         <br />
-        {this.state.userId !== undefined
+        {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Documentation</Separator>
             <Stack horizontal horizontalAlign="center" tokens={{
@@ -180,20 +180,22 @@ class App extends React.Component {
           <div>
             <br />
             <Label>Curently Supported Token Providers:</Label>
-            <Text>'graph', 'dropbox, 'google'</Text>
+            <Text>{this.state.supportedTokenProviders.join()}</Text>
             <br />
             <br />
             <Label>Programatically Manage Tokens in Static Web Apps:</Label>
-            <Text>Create Token     [Post] '/api/.token/create/#tokenproviderid#'</Text>
+            <Text>List Token Providers  [POST] '/api/.token/providers</Text>
             <br />
-            <Text>Delete Token     [Post] '/api/.token/delete/#tokenproviderid#'</Text>
+            <Text>Create Token     [POST] '/api/.token/create/#tokenproviderid#'</Text>
+            <br />
+            <Text>Delete Token     [POST] '/api/.token/delete/#tokenproviderid#'</Text>
             <br />
             <Text>Token Status     [GET]  '/api/.token/status/#tokenproviderid#'</Text>
             <br />
             <br />
             <Label>Token's can be used in two ways,</Label>
             <Label>Option 1: Get Token</Label>
-            <Text>Retrieve Token   [GET]  '/api/.token/#tokenproviderid#'</Text>
+            <Text>Retrieve Token   [POST]  '/api/.token/#tokenproviderid#'</Text>
             <br />
             <Label>Option 2: Proxy</Label>
             <Text>[GET, PUT, POST, PATCH, DELETE] '/api/proxy/#api-operation-path#'</Text>
@@ -202,7 +204,7 @@ class App extends React.Component {
             <br />
             <br />
             <Label>Example: Graph</Label>
-            <Text>Create Token     [Post] '/api/.token/create/graph'</Text>
+            <Text>Create Token     [POST] '/api/.token/create/graph'</Text>
             <br />
             <Text>Delete Token     [Post] '/api/.token/delete/graph'</Text>
             <br />
