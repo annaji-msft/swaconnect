@@ -102,7 +102,7 @@ class App extends React.Component {
             </div>}
         </ThemeProvider>
       </header>
-
+      <br />
       {this.state.userId !== undefined
         && <div>
           <Separator theme={theme}>Option 1: Proxy</Separator>
@@ -110,13 +110,13 @@ class App extends React.Component {
           <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
         </div>
       }
-
       {this.state.showProxy === true
         && <div>
           <Proxy />
         </div>}
 
-        {this.state.userId !== undefined
+      <br />
+      {this.state.userId !== undefined
         && <div>
           <Separator theme={theme}>Option 2: Retrieve Token</Separator>
           <Toggle onText="show" offText="hide" onChange={this.tokenSectionToggle} />
