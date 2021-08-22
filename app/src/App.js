@@ -32,7 +32,8 @@ class App extends React.Component {
       userId: undefined,
       identityProvider: undefined,
       showGetToken: true,
-      showProxy: true
+      showProxy: true,
+      showDocs: false
     };
     initializeIcons();
   }
@@ -49,6 +50,8 @@ class App extends React.Component {
   tokenSectionToggle = (ev, checked) => { this.setState({ showGetToken: checked }); };
 
   proxySectionToggle = (ev, checked) => { this.setState({ showProxy: checked }); };
+
+  docsToggle = (ev, checked) => { this.setState({ showDocs: checked }); };
 
   render() {
     return (<div>
@@ -76,17 +79,17 @@ class App extends React.Component {
               Logout
             </DefaultButton>
             {this.state.userId !== undefined
-            && <div>
-              <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
-              <Label>Token's are managed under logged in identity by the system.</Label>
-              <br />
-            </div>}
+              && <div>
+                <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
+                <Label>Token's are managed under logged in identity by the system.</Label>
+                <br />
+              </div>}
             {this.state.userId === undefined
-            && <div>
-              <Label>Please login to get started!</Label>
-              <Label>Token's are managed under logged in identity by the system.</Label>
-              <br />
-            </div>}
+              && <div>
+                <Label>Please login to get started!</Label>
+                <Label>Token's are managed under logged in identity by the system.</Label>
+                <br />
+              </div>}
           </Stack>
           <br />
           {this.state.userId !== undefined
@@ -114,8 +117,8 @@ class App extends React.Component {
               childrenGap: 10,
               padding: 10,
             }}>
-            <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
-            <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
+              <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
+              <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
             </Stack>
           </div>
         }
@@ -138,7 +141,7 @@ class App extends React.Component {
           </div>
         }
 
-        { this.state.userId !== undefined && this.state.showGetToken === true
+        {this.state.userId !== undefined && this.state.showGetToken === true
           && <div>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
@@ -152,6 +155,57 @@ class App extends React.Component {
               <Separator vertical />
             </Stack>
           </div>}
+
+        {this.state.userId !== undefined
+          && <div>
+            <Separator theme={theme}>Documentation</Separator>
+            <Stack horizontal horizontalAlign="center" tokens={{
+              childrenGap: 10,
+              padding: 10,
+            }}>
+              <Toggle onText="show" offText="hide" onChange={this.docsToggle} />
+              <Text>How does this work?</Text>
+            </Stack>
+          </div>
+        }
+
+        {this.state.showDocs === true &&
+          <div>
+            <br />
+            <Label>Curently Supported Token Providers:</Label>
+            <Text>'graph', 'dropbox, 'google'</Text>
+            <br />
+            <br />
+            <Label>Programatically Manage Tokens in Static Web Apps:</Label>
+            <Text>Create Token     [Post] '/api/.token/create/#tokenproviderid#'</Text>
+            <br />
+            <Text>Delete Token     [Post] '/api/.token/delete/#tokenproviderid#'</Text>
+            <br />
+            <Text>Token Status     [GET]  '/api/.token/status/#tokenproviderid#'</Text>
+            <br />
+            <br />
+            <Label>Token's can be used in two ways,</Label>
+            <Label>Option 1: Get Token</Label>
+            <Text>Retrieve Token   [GET]  '/api/.token/#tokenproviderid#'</Text>
+            <br />
+            <Label>Option 2: Proxy</Label>
+            <Text>[GET, PUT, POST, PATCH, DELETE] '/api/proxy/#api-operation-path#'</Text>
+            <Text>;Required Headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Text>
+            <br />
+            <br />
+            <Label>Example: Graph</Label>
+            <Text>Create Token     [Post] '/api/.token/create/graph'</Text>
+            <br />
+            <Text>Delete Token     [Post] '/api/.token/delete/graph'</Text>
+            <br />
+            <Text>Token Status     [GET]  '/api/.token/status/graph'</Text>
+            <br />
+            <Text>Retrieve Token   [GET]  '/api/.token/graph'</Text>
+            <br />
+            <Text>Proxy [GET] '/api/proxy/me'; Headers - [X-MS-TOKENPROVIDER-ID:"graph"] and [X-MS-PROXY-BACKEND-HOST:"https://graph.microsoft.com/v1.0"]</Text>
+            <br />
+          </div>
+        }
       </ThemeProvider>
     </div>);
   }
