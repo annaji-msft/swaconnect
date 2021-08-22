@@ -13,17 +13,7 @@ class Connect extends React.Component {
   }
 
   componentDidMount() {
-    axios.get(`/api/.token/status/${this.props.name}`)
-      .then(response => {
-
-        if(response && response.data !== undefined) {
-          this.setState({ status: response.data })
-        }
-
-        if(response && response.data === 'CONNECTED') {
-          this.setState({ connected: true })
-         }
-      });
+    this.status();
   }
 
   create = () => {
@@ -53,31 +43,36 @@ class Connect extends React.Component {
 
   status = () => {
     axios.get(`/api/.token/status/${this.props.name}`)
-      .then((response) => {
-        this.setState({ status: response.data });
-      }).catch((error) => {
-        alert(error);
-      });
-  }
-
-  getToken = () => {
-    axios.get(`/api/.token/${this.props.name}`)
-    .then((token) => {
-      this.setState({ token: token });
+    .then(response => {
+      if(response) {
+        if(response.data !== undefined) {
+          this.setState({ status: response.data });
+          if(response.data === 'CONNECTED') {
+            this.setState({ connected: true });
+          }
+        }
+        if(response.status === 404) {
+          this.setState({ status: "NOT FOUND" });
+        }
+      }
     }).catch((error) => {
-      alert(error);
+      console.log(error);
     });
   }
 
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>{this.props.name}</Label>
+      <Label>{this.props.name} : {this.state.status}</Label>
          <Stack verticalAlign tokens={{
                childrenGap: "l2",
                padding: "l2"
              }}>
 
+               <DefaultButton iconProps={{ iconName: 'StatusCircleSync' }} onClick={this.status}>
+                 Status
+               </DefaultButton>
+               
                <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected === true} >
                  Create
                </DefaultButton>
