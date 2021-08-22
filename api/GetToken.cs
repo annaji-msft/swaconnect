@@ -17,7 +17,7 @@ namespace Company.Function
     {
         [FunctionName("GetToken")]
         public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = ".token/{tokenProviderId}")] HttpRequest req,
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = ".token/{tokenProviderId}")] HttpRequest req,
             ILogger log)
         {
             var httpClient = new HttpClient();

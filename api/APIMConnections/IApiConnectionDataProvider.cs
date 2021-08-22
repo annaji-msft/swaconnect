@@ -8,6 +8,12 @@ namespace MSHA.ApiConnections
 {
     public interface IApiConnectionDataProvider
     {
+		Task<AzureResourceList<TokenProviderResource>> ListTokenProvidersAsync(
+			string accessToken,
+			string subscriptionId,
+			string resourceGroupId,
+			string serviceName);
+
        Task<ApiConnectionResource> CreateConnectionAsync(
 			string accessToken,
 			string subscriptionId,

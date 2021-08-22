@@ -19,7 +19,6 @@ namespace Company.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = ".token/create/{tokenProviderId}")] HttpRequest req,
             ILogger log)
         {
-            string responseMessage = JsonConvert.SerializeObject(req.Headers);
             req.Headers.TryGetValue("X-MS-CLIENT-PRINCIPAL-ID", out var principalId);
             req.Headers.TryGetValue("X-MS-ORIGINAL-URL", out var swaUrl);
             

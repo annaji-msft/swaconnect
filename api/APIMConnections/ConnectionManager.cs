@@ -47,6 +47,26 @@ namespace MSHA.ApiConnections
 		}
 
 		//change to take connection type and name
+		public static async Task<IList<string>> ListTokenProvidersAsync()
+		{
+			var accessToken = await GetArmAccessToken();
+
+			var tokeProviders = await apiConnectionDataProvider.ListTokenProvidersAsync(
+				accessToken,
+				subscriptionId,
+				resourceGroupId,
+				serviceName);
+
+			var providers = new List<string>();
+			foreach(var tokenProvider in tokeProviders.Values)
+			{
+				providers.Add(tokenProvider.Name);
+			}
+
+			return providers;
+		}
+
+		//change to take connection type and name
 		public static async Task<ApiConnectionResource> CreateConnectionAsync(
 			string tokenProviderName,
 			string connectionName,
