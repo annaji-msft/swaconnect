@@ -14,7 +14,7 @@ class Token extends React.Component {
     axios.get(`/api/.token/status/${this.props.name}`)
     .then(response => {
       if(response && response.data === 'CONNECTED') {
-        axios.get(`/api/.token/${this.props.name}`)
+        axios.post(`/api/.token/${this.props.name}`)
         .then((token) => {
           this.setState({ token: token });
         }).catch((error) => {

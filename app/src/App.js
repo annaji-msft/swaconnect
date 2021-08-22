@@ -33,7 +33,8 @@ class App extends React.Component {
       identityProvider: undefined,
       showGetToken: true,
       showProxy: true,
-      showDocs: false
+      showDocs: false,
+      supportedTokenProviders: undefined
     };
     initializeIcons();
   }
@@ -44,6 +45,11 @@ class App extends React.Component {
         if (userInfo && userInfo.data.clientPrincipal != null) {
           this.setState({ userId: userInfo.data.clientPrincipal.userDetails, identityProvider: userInfo.data.clientPrincipal.identityProvider })
         }
+
+        axios.get('/api/.token/providers')
+        .then(response => {
+          this.setState({supportedTokenProviders: response.data})
+        });
       })
   }
 
