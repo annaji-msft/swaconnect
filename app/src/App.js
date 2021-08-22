@@ -190,7 +190,8 @@ class App extends React.Component {
             <br />
             <Label>Option 2: Proxy</Label>
             <Text>[GET, PUT, POST, PATCH, DELETE] '/api/proxy/#api-operation-path#'</Text>
-            <Text>;Required Headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Text>
+            <br />
+            <Text>Required Headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Text>
             <br />
             <br />
             <Label>Example: Graph</Label>
