@@ -52,37 +52,36 @@ class App extends React.Component {
 
   render() {
     return (<div>
-      <header>
-        <h3>#EasyTokens - Token management just got easy!</h3>
-        <Separator theme={theme}>Step 1: Login</Separator>
-        <ThemeProvider>
-          <Stack horizontal tokens={{
-            childrenGap: 10,
-            padding: 10,
+      <ThemeProvider>
+        <header>
+          <Label theme={theme}>EasyTokens</Label>
+          <Separator theme={theme}>Step 1: Login</Separator>
+          <Stack reversed horizontal tokens={{
+            childrenGap: "l1",
+            padding: "l1",
           }}>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/aad" disabled={this.state.userId !== undefined} >
-              Microsoft
-            </DefaultButton>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/twitter" disabled={this.state.userId !== undefined} >
-              Twitter
+            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/google" disabled={this.state.userId !== undefined} >
+              Google
             </DefaultButton>
             <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/github" disabled={this.state.userId !== undefined} >
               Github
             </DefaultButton>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/google" disabled={this.state.userId !== undefined} >
-              Google
+            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/twitter" disabled={this.state.userId !== undefined} >
+              Twitter
+            </DefaultButton>
+            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/aad" disabled={this.state.userId !== undefined} >
+              Microsoft
             </DefaultButton>
             <DefaultButton href="/.auth/logout" disabled={this.state.userId === undefined}>
               Logout
             </DefaultButton>
-          </Stack>
-          <Label>Token's will be stored and managed under logged in identity.</Label>
-          <br />
-          {this.state.userId !== undefined
+            {this.state.userId === undefined
             && <div>
-              <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}"</Label>
+              <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
+              <Label>Token's are managed under logged in identity by the system.</Label>
               <br />
             </div>}
+          </Stack>
           <br />
           {this.state.userId !== undefined
             && <div>
@@ -100,47 +99,46 @@ class App extends React.Component {
                 <Separator vertical />
               </Stack>
             </div>}
-        </ThemeProvider>
-      </header>
-      <br />
-      {this.state.userId !== undefined
-        && <div>
-          <Separator theme={theme}>Option 1: Proxy</Separator>
-          <Toggle onText="show" offText="hide" onChange={this.proxySectionToggle} />
-          <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
-        </div>
-      }
-      {this.state.showProxy === true
-        && <div>
-          <Proxy />
-        </div>}
+        </header>
+        <br />
+        {this.state.userId !== undefined
+          && <div>
+            <Separator theme={theme}>Option 1: Proxy</Separator>
+            <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
+            <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
+          </div>
+        }
+        {this.state.userId !== undefined && this.state.showProxy === true
+          && <div>
+            <Proxy />
+          </div>}
 
-      <br />
-      {this.state.userId !== undefined
-        && <div>
-          <Separator theme={theme}>Option 2: Retrieve Token</Separator>
-          <Toggle onText="show" offText="hide" onChange={this.tokenSectionToggle} />
-          <Text>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Text>
-        </div>
-      }
+        <br />
+        {this.state.userId !== undefined
+          && <div>
+            <Separator theme={theme}>Option 2: Retrieve Token</Separator>
+            <Toggle defaultChecked onText="show" offText="hide" onChange={this.tokenSectionToggle} />
+            <Text>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Text>
+          </div>
+        }
 
-      {this.state.showGetToken === true
-        && <div>
-          <Stack horizontal tokens={{
-            childrenGap: 10,
-            padding: 10,
-          }}>
-            <Token name="graph" />
-            <Separator vertical />
-            <Token name="dropbox" />
-            <Separator vertical />
-            <Token name="google" />
-            <Separator vertical />
-          </Stack>
-        </div>}
+        { this.state.userId !== undefined && this.state.showGetToken === true
+          && <div>
+            <Stack horizontal tokens={{
+              childrenGap: 10,
+              padding: 10,
+            }}>
+              <Token name="graph" />
+              <Separator vertical />
+              <Token name="dropbox" />
+              <Separator vertical />
+              <Token name="google" />
+              <Separator vertical />
+            </Stack>
+          </div>}
+      </ThemeProvider>
     </div>);
   }
-
 }
 
 export default App;

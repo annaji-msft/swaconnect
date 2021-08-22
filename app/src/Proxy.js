@@ -43,10 +43,10 @@ class Proxy extends React.Component {
     const tokenProviderId = headers["X-MS-TOKENPROVIDER-ID"];
     const proxyBackend = headers["X-MS-PROXY-BACKEND-HOST"];
 
-    if (tokenProviderId === undefined 
-      ||  tokenProviderId === "" 
-      || proxyBackend === undefined 
-      ||  proxyBackend === "") {
+    if (tokenProviderId === undefined
+      || tokenProviderId === ""
+      || proxyBackend === undefined
+      || proxyBackend === "") {
       this.setState({ response: "Headers X-MS-TOKENPROVIDER-ID and X-MS-PROXY-BACKEND-HOST must be supplied." });
     } else {
       axios.get(`/api/.token/status/${tokenProviderId}`)
@@ -67,7 +67,7 @@ class Proxy extends React.Component {
                 headers: headers,
               };
             }
-            
+
             axios.request(config).then((response) => {
               this.setState({ response: JSON.stringify(response.data) });
             }).catch((error) => {
@@ -90,15 +90,15 @@ class Proxy extends React.Component {
           childrenGap: "5",
           padding: "5",
         }}>
-          <Dropdown label="Method" defaultSelectedKey={defaultMethod} onChange={this.methodChanged} options={httpMethods} styles={dropdownStyles} />
-          <TextField label="API Operation" defaultValue={defaultApiOperation} onChange={this.operationChange} width="300" />
+          <Dropdown label="Method" required defaultSelectedKey={defaultMethod} onChange={this.methodChanged} options={httpMethods} styles={dropdownStyles} />
+          <TextField label="API Operation" required defaultValue={defaultApiOperation} onChange={this.operationChange} width="300" />
         </Stack>
         <Stack verticalAlign tokens={{
-          childrenGap: "5",
-          padding: "5",
+          childrenGap: "10",
+          padding: "10"
         }}>
         </Stack>
-        <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} width="300" />
+        <TextField label="Headers" defaultValue={defaultHeaders} multiline onChange={this.headersChange} required />
         <TextField label="Body" height="300" multiline onChange={this.bodyChange} width="300" />
         <br />
         <PrimaryButton text="Send Request" label="Send" onClick={this.sendRequest} />
