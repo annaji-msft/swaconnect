@@ -31,8 +31,8 @@ class App extends React.Component {
     this.state = {
       userId: undefined,
       identityProvider: undefined,
-      showGetToken: false,
-      showProxy: false
+      showGetToken: true,
+      showProxy: true
     };
     initializeIcons();
   }
