@@ -156,6 +156,7 @@ class App extends React.Component {
             </Stack>
           </div>}
 
+        <br />
         {this.state.userId !== undefined
           && <div>
             <Separator theme={theme}>Documentation</Separator>
