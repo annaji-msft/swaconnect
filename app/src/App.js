@@ -8,7 +8,8 @@ import {
   Label,
   Text,
   Toggle,
-  Separator
+  Separator,
+  Shimmer
 } from '@fluentui/react';
 import { createTheme } from '@fluentui/react/lib/Styling';
 
@@ -101,7 +102,10 @@ class App extends React.Component {
               <br />
             </div>}
           <br />
-          {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
+        </header>
+        <br />
+        <Shimmer isDataLoaded={this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined}>
+        {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
             && <div>
               <Separator theme={theme}>Step 2: Manage Tokens</Separator>
               <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
@@ -117,8 +121,6 @@ class App extends React.Component {
                 })}
               </Stack>
             </div>}
-        </header>
-        <br />
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Option 1: Proxy</Separator>
@@ -219,6 +221,7 @@ class App extends React.Component {
             <br />
           </div>
         }
+        </Shimmer>
       </ThemeProvider>
     </div>);
   }
