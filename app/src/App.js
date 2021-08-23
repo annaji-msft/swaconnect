@@ -127,7 +127,7 @@ class App extends React.Component {
               padding: 10,
             }}>
               <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
-              <Text>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Text>
+              <Label>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Label>
             </Stack>
           </div>
         }
@@ -145,7 +145,7 @@ class App extends React.Component {
               padding: 10,
             }}>
               <Toggle defaultChecked onText="show" offText="hide" onChange={this.tokenSectionToggle} />
-              <Text>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Text>
+              <Label>Just give me the token! It's ok if the user get's hold of token's that they have access to.</Label>
             </Stack>
           </div>
         }
@@ -174,7 +174,7 @@ class App extends React.Component {
               padding: 10,
             }}>
               <Toggle onText="show" offText="hide" onChange={this.docsToggle} />
-              <Text>How does this work?</Text>
+              <Label>How does this work?</Label>
             </Stack>
           </div>
         }
