@@ -50,7 +50,7 @@ namespace Company.Function
                 var runtimeURL = $"{gatewayUrl}/GenericProxy/token";
                 log.LogInformation($"Calling Url - {runtimeURL}");
 
-                var httpMethod = new HttpMethod(req.Method);
+                var httpMethod = new HttpMethod("GET");
                 using(var httpRequestMessage = new HttpRequestMessage(httpMethod, runtimeURL)) 
                 {
                    httpRequestMessage.Headers.Add("connector-id", tokenProviderId.ToString());

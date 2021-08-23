@@ -63,7 +63,7 @@ class Connect extends React.Component {
         }
 
         if(error.response.status === 401) {
-          this.setState({ status: "Incomplete!" });
+          this.setState({ connected: true, status: "Incomplete!" });
         }
       }
       console.log(error);
@@ -78,10 +78,6 @@ class Connect extends React.Component {
                childrenGap: "l2",
                padding: "l2"
              }}>
-
-               <DefaultButton iconProps={{ iconName: 'StatusCircleSync' }} onClick={this.status}>
-                 Status
-               </DefaultButton>
                
                <DefaultButton iconProps={{ iconName: 'PlugConnected' }} onClick={this.create} disabled={this.state.connected === true} >
                  Create
@@ -89,6 +85,10 @@ class Connect extends React.Component {
 
                <DefaultButton iconProps={{ iconName: 'PlugDisconnected' }} onClick={this.delete}  disabled={this.state.connected === false}>
                  Delete
+               </DefaultButton>
+
+               <DefaultButton iconProps={{ iconName: 'StatusCircleSync' }} onClick={this.status}>
+                 Status
                </DefaultButton>
 
              </Stack>
