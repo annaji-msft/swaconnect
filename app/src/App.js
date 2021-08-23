@@ -96,8 +96,7 @@ class App extends React.Component {
                 <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/aad" disabled={this.state.userId !== undefined} >
                   Microsoft
                 </DefaultButton>
-                <Label>Please login to get started!</Label>
-                <Label>Token's are managed under logged in identity by the system.</Label>
+                <Label>Please login to get started! Token's are managed under logged in identity.</Label>
               </Stack>
               <br />
             </div>}
