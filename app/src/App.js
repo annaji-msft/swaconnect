@@ -105,7 +105,7 @@ class App extends React.Component {
           <br />
         </header>
         <br />
-        {this.state.supportedTokenProviders === undefined
+        {this.state.userId !== undefined && this.state.supportedTokenProviders === undefined
           && <Spinner size={SpinnerSize.large} />
         }
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
