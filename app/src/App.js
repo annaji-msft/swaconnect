@@ -9,7 +9,8 @@ import {
   Text,
   Toggle,
   Separator,
-  Spinner
+  Spinner,
+  SpinnerSize
 } from '@fluentui/react';
 import { createTheme } from '@fluentui/react/lib/Styling';
 
