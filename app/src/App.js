@@ -47,9 +47,9 @@ class App extends React.Component {
         }
 
         axios.get('/api/.token/providers')
-        .then(response => {
-          this.setState({supportedTokenProviders: response.data})
-        });
+          .then(response => {
+            this.setState({ supportedTokenProviders: response.data })
+          });
       })
   }
 
@@ -69,29 +69,29 @@ class App extends React.Component {
             childrenGap: "l1",
             padding: "l1",
           }}>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/google" disabled={this.state.userId !== undefined} >
-              Google
-            </DefaultButton>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/github" disabled={this.state.userId !== undefined} >
-              Github
-            </DefaultButton>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/twitter" disabled={this.state.userId !== undefined} >
-              Twitter
-            </DefaultButton>
-            <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/aad" disabled={this.state.userId !== undefined} >
-              Microsoft
-            </DefaultButton>
-            <DefaultButton href="/.auth/logout" disabled={this.state.userId === undefined}>
-              Logout
-            </DefaultButton>
             {this.state.userId !== undefined
               && <div>
+                <DefaultButton href="/.auth/logout" disabled={this.state.userId === undefined}>
+                  Logout
+                </DefaultButton>
                 <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
                 <Label>Token's are managed under logged in identity by the system.</Label>
                 <br />
               </div>}
             {this.state.userId === undefined
               && <div>
+                <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/google" disabled={this.state.userId !== undefined} >
+                  Google
+                </DefaultButton>
+                <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/github" disabled={this.state.userId !== undefined} >
+                  Github
+                </DefaultButton>
+                <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/twitter" disabled={this.state.userId !== undefined} >
+                  Twitter
+                </DefaultButton>
+                <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/aad" disabled={this.state.userId !== undefined} >
+                  Microsoft
+                </DefaultButton>
                 <Label>Please login to get started!</Label>
                 <Label>Token's are managed under logged in identity by the system.</Label>
                 <br />
@@ -106,10 +106,10 @@ class App extends React.Component {
                 childrenGap: 10,
                 padding: 10,
               }}>
-                {this.state.supportedTokenProviders.map((item)=>{
+                {this.state.supportedTokenProviders.map((item) => {
                   return <div>
-                     <Connect name={item} />
-                     <Separator vertical />
+                    <Connect name={item} />
+                    <Separator vertical />
                   </div>
                 })}
               </Stack>
@@ -128,13 +128,13 @@ class App extends React.Component {
             </Stack>
           </div>
         }
-        {this.state.userId !== undefined && this.state.showProxy === true  && this.state.supportedTokenProviders !== undefined
+        {this.state.userId !== undefined && this.state.showProxy === true && this.state.supportedTokenProviders !== undefined
           && <div>
             <Proxy />
           </div>}
 
         <br />
-        {this.state.userId !== undefined  && this.state.supportedTokenProviders !== undefined
+        {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Option 2: Retrieve Token</Separator>
             <Stack horizontal horizontalAlign="center" tokens={{
@@ -147,18 +147,18 @@ class App extends React.Component {
           </div>
         }
 
-        {this.state.userId !== undefined && this.state.showGetToken === true  && this.state.supportedTokenProviders !== undefined
+        {this.state.userId !== undefined && this.state.showGetToken === true && this.state.supportedTokenProviders !== undefined
           && <div>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
             }}>
-               {this.state.supportedTokenProviders.map((item)=>{
-                  return <div>
-                     <Token name={item} />
-                     <Separator vertical />
-                  </div>
-                })}
+              {this.state.supportedTokenProviders.map((item) => {
+                return <div>
+                  <Token name={item} />
+                  <Separator vertical />
+                </div>
+              })}
             </Stack>
           </div>}
 
