@@ -27,7 +27,7 @@ class Connect extends React.Component {
         // Initiate consent flow with redirect url.
         window.location.replace(error.response.data);
       } else {
-        alert(error);
+        console.log(error);
       }
     });
   }
@@ -35,9 +35,9 @@ class Connect extends React.Component {
   delete = () => {
     axios.post(`/api/.token/delete/${this.props.name}`)
       .then(() => {
-        this.setState({ connected: false });
+        this.setState({ connected: false, status: "Not Found!" });
       }).catch((error) => {
-        alert(error);
+        console.log(error);
       });
   }
 
