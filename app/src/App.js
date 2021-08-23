@@ -65,21 +65,26 @@ class App extends React.Component {
         <header>
           <Label theme={theme}>EasyTokens</Label>
           <Separator theme={theme}>Step 1: Login</Separator>
-          <Stack reversed horizontal tokens={{
-            childrenGap: "l1",
-            padding: "l1",
-          }}>
-            {this.state.userId !== undefined
-              && <div>
+          {this.state.userId !== undefined
+            && <div>
+              <Stack reversed horizontal tokens={{
+                childrenGap: "l1",
+                padding: "l1",
+              }}>
                 <DefaultButton href="/.auth/logout" disabled={this.state.userId === undefined}>
                   Logout
                 </DefaultButton>
                 <Label>Hello, "{this.state.userId}". You are logged in using "{this.state.identityProvider}".</Label>
                 <Label>Token's are managed under logged in identity by the system.</Label>
-                <br />
-              </div>}
-            {this.state.userId === undefined
-              && <div>
+              </Stack>
+              <br />
+            </div>}
+          {this.state.userId === undefined
+            && <div>
+              <Stack reversed horizontal tokens={{
+                childrenGap: "l1",
+                padding: "l1",
+              }}>
                 <DefaultButton iconProps={{ iconName: 'AuthenticatorApp' }} href="/.auth/login/google" disabled={this.state.userId !== undefined} >
                   Google
                 </DefaultButton>
@@ -94,9 +99,9 @@ class App extends React.Component {
                 </DefaultButton>
                 <Label>Please login to get started!</Label>
                 <Label>Token's are managed under logged in identity by the system.</Label>
-                <br />
-              </div>}
-          </Stack>
+              </Stack>
+              <br />
+            </div>}
           <br />
           {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
             && <div>
