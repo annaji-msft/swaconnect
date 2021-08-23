@@ -104,23 +104,25 @@ class App extends React.Component {
           <br />
         </header>
         <br />
-        <Shimmer isDataLoaded={this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined}>
+        {this.state.supportedTokenProviders === undefined
+          && <Spinner size={SpinnerSize.large} />
+        }
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
-            && <div>
-              <Separator theme={theme}>Step 2: Manage Tokens</Separator>
-              <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
-              <Stack horizontal horizontalAlign="center" tokens={{
-                childrenGap: 10,
-                padding: 10,
-              }}>
-                {this.state.supportedTokenProviders.map((item) => {
-                  return <div>
-                    <Connect name={item} />
-                    <Separator vertical />
-                  </div>
-                })}
-              </Stack>
-            </div>}
+          && <div>
+            <Separator theme={theme}>Step 2: Manage Tokens</Separator>
+            <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
+            <Stack horizontal horizontalAlign="center" tokens={{
+              childrenGap: 10,
+              padding: 10,
+            }}>
+              {this.state.supportedTokenProviders.map((item) => {
+                return <div>
+                  <Connect name={item} />
+                  <Separator vertical />
+                </div>
+              })}
+            </Stack>
+          </div>}
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={theme}>Option 1: Proxy</Separator>
@@ -221,7 +223,6 @@ class App extends React.Component {
             <br />
           </div>
         }
-        </Shimmer>
       </ThemeProvider>
     </div>);
   }
