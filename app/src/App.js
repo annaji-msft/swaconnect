@@ -117,11 +117,7 @@ class App extends React.Component {
               childrenGap: 10,
               padding: 10,
             }}>
-            <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
-            <Text>{this.state.supportedTokenProviders.join()}</Text>
-            <br />
             <Text>See documentation below for examples.</Text>
-
               {this.state.supportedTokenProviders.map((item) => {
                 return <div>
                   <Connect name={item} />
@@ -140,13 +136,17 @@ class App extends React.Component {
               <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
               <Label>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Label>
             </Stack>
+            <div style={{marginLeft: "20px"}}>
+            <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
+            <Text>{this.state.supportedTokenProviders.join()}</Text>
+            </div>
+            <br />
           </div>
         }
         {this.state.userId !== undefined && this.state.showProxy === true && this.state.supportedTokenProviders !== undefined
           && <div>
             <Proxy />
           </div>}
-
         <br />
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
