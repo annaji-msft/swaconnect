@@ -117,7 +117,6 @@ class App extends React.Component {
               childrenGap: 10,
               padding: 10,
             }}>
-            <Text>See documentation below for examples.</Text>
               {this.state.supportedTokenProviders.map((item) => {
                 return <div>
                   <Connect name={item} />
@@ -139,6 +138,7 @@ class App extends React.Component {
             <div style={{marginLeft: "20px"}}>
             <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
             <Text>{this.state.supportedTokenProviders.join()}</Text>
+            <Text>See documentation below for examples.</Text>
             </div>
             <br />
           </div>

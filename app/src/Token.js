@@ -6,7 +6,8 @@ class Token extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: ""
+      token: "",
+      status: "Error"
     };
   }
 
@@ -16,7 +17,7 @@ class Token extends React.Component {
       if(response && response.data === 'CONNECTED') {
         axios.post(`/api/.token/${this.props.name}`)
         .then((token) => {
-          this.setState({ token: token });
+          this.setState({status: "Created!", token: token });
         }).catch((error) => {
           console.log(error);
         });
@@ -33,7 +34,7 @@ class Token extends React.Component {
   render() { 
     return (<div>
       <ThemeProvider>
-      <Label>{this.props.name} token</Label>
+      <Label>{this.props.name} : {this.state.status}</Label>
          <Stack verticalAlign tokens={{
                childrenGap: "l2",
                padding: "l2"
