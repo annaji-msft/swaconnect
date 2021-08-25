@@ -19,6 +19,15 @@ import Connect from './Connect';
 import Proxy from './Proxy';
 import Token from './Token';
 
+const mainTheme = createTheme({
+  fonts: {
+    medium: {
+      fontFamily: 'Monaco, Menlo, Consolas',
+      fontSize: '30px',
+    },
+  },
+});
+
 const theme = createTheme({
   fonts: {
     medium: {
@@ -67,7 +76,7 @@ class App extends React.Component {
       <ThemeProvider>
         <header>
           <Label theme={theme}>EasyTokens</Label>
-          <Separator theme={theme}>Step 1: Login</Separator>
+          <Separator theme={mainTheme}>Step 1: Login</Separator>
           {this.state.userId !== undefined
             && <div>
               <Stack reversed horizontal tokens={{
@@ -111,7 +120,7 @@ class App extends React.Component {
         }
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
-            <Separator theme={theme}>Step 2: Manage Tokens</Separator>
+            <Separator theme={mainTheme}>Step 2: Manage Tokens</Separator>
             <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
@@ -127,6 +136,8 @@ class App extends React.Component {
           </div>}
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
+            <Separator theme={mainTheme}>Step 3: Use Tokens</Separator>
+            <br />
             <Separator theme={theme}>Option 1: Proxy</Separator>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
