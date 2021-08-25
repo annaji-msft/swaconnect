@@ -10,7 +10,8 @@ import {
   Toggle,
   Separator,
   Spinner,
-  SpinnerSize
+  SpinnerSize,
+  Link
 } from '@fluentui/react';
 import { createTheme } from '@fluentui/react/lib/Styling';
 
@@ -116,6 +117,11 @@ class App extends React.Component {
               childrenGap: 10,
               padding: 10,
             }}>
+            <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
+            <Text>{this.state.supportedTokenProviders.join()}</Text>
+            <br />
+            <Text>See documentation below for examples.</Text>
+
               {this.state.supportedTokenProviders.map((item) => {
                 return <div>
                   <Connect name={item} />
@@ -184,14 +190,11 @@ class App extends React.Component {
           </div>
         }
 
-        {this.state.showDocs === true &&
+        {this.state.showDocs === true  &&
           <div>
             <br />
-            <Label>Curently Supported Token Providers:</Label>
-            <Text>{this.state.supportedTokenProviders.join()}</Text>
-            <br />
-            <br />
             <Label>Programatically Manage Tokens in Static Web Apps:</Label>
+            <div style={{marginLeft: "20px"}}>
             <Text>List Token Providers  [POST] '/api/.token/providers</Text>
             <br />
             <Text>Create Token     [POST] '/api/.token/create/#tokenproviderid#'</Text>
@@ -199,19 +202,25 @@ class App extends React.Component {
             <Text>Delete Token     [POST] '/api/.token/delete/#tokenproviderid#'</Text>
             <br />
             <Text>Token Status     [GET]  '/api/.token/status/#tokenproviderid#'</Text>
+            </div>
             <br />
             <br />
             <Label>Token's can be used in two ways,</Label>
+            <div style={{marginLeft: "20px"}}>
             <Label>Option 1: Get Token</Label>
             <Text>Retrieve Token   [POST]  '/api/.token/#tokenproviderid#'</Text>
+            </div>
             <br />
+            <div style={{marginLeft: "20px"}}>
             <Label>Option 2: Proxy</Label>
             <Text>[GET, PUT, POST, PATCH, DELETE] '/api/proxy/#api-operation-path#'</Text>
             <br />
             <Text>Required Headers - [X-MS-TOKENPROVIDER-ID: #tokenproviderid#] and [X-MS-PROXY-BACKEND-HOST: #endpoint#]</Text>
+            </div>
             <br />
-            <br />
-            <Label>Example: Graph</Label>
+            <Label>GetToken Example(s)</Label>
+            <div style={{marginLeft: "20px"}}>
+            <Label>Graph</Label>
             <Text>Create Token     [POST] '/api/.token/create/graph'</Text>
             <br />
             <Text>Delete Token     [Post] '/api/.token/delete/graph'</Text>
@@ -220,7 +229,79 @@ class App extends React.Component {
             <br />
             <Text>Retrieve Token   [GET]  '/api/.token/graph'</Text>
             <br />
-            <Text>Proxy [GET] '/api/proxy/me'; Headers - [X-MS-TOKENPROVIDER-ID:"graph"] and [X-MS-PROXY-BACKEND-HOST:"https://graph.microsoft.com/v1.0"]</Text>
+            <Label>Dropbox</Label>
+            <Text>Create Token     [POST] '/api/.token/create/dropbox'</Text>
+            <br />
+            <Text>Delete Token     [Post] '/api/.token/delete/dropbox'</Text>
+            <br />
+            <Text>Token Status     [GET]  '/api/.token/status/dropbox'</Text>
+            <br />
+            <Text>Retrieve Token   [GET]  '/api/.token/dropbox'</Text>
+            <br />
+            <Label>GoogleDrive</Label>
+            <Text>Create Token     [POST] '/api/.token/create/googledrive'</Text>
+            <br />
+            <Text>Delete Token     [Post] '/api/.token/delete/googledrive'</Text>
+            <br />
+            <Text>Token Status     [GET]  '/api/.token/status/googledrive'</Text>
+            <br />
+            <Text>Retrieve Token   [GET]  '/api/.token/googledrive'</Text>
+            <br />
+            <br />
+            <Text>Combine the tokens with your fav. client side sdk's (or) directly attach token to API call's</Text>
+            <br />
+            <Link href='https://docs.microsoft.com/en-us/graph/sdks/sdk-installation'>Graph SDK</Link>
+            <br />
+            <Link href='https://www.dropbox.com/developers/documentation/javascript'>Dropbox SDK</Link>
+            <br />
+            <Link href='https://developers.google.com/drive/api/v2/downloads'>GoogleDrive SDK</Link>
+            </div>
+            <br />
+            <Label>Proxy Example(s)</Label>
+            <br />
+            <div style={{marginLeft: "20px"}}>
+              <Label>Graph</Label>
+              <div style={{marginLeft: "40px"}}>
+              <Text>HttpMethod - GET</Text>
+              <br />
+              <Text>ApiOperation - '/api/proxy/me'</Text>
+              <br />
+              <Text>Headers - [X-MS-TOKENPROVIDER-ID:"graph"] and [X-MS-PROXY-BACKEND-HOST:"https://graph.microsoft.com/v1.0"]</Text>
+              <br />
+              </div>
+              <br />
+              <Label>Dropbox</Label>
+              <div style={{marginLeft: "40px"}}>
+              <Text>HttpMethod - POST</Text>
+              <br />
+              <Text>ApiOperation - '/api/proxy/files/list_folder'</Text>
+              <br />
+              <Text>Headers - [X-MS-TOKENPROVIDER-ID:"dropbox"] and [X-MS-PROXY-BACKEND-HOST:"https://api.dropboxapi.com/2"]</Text>
+              <br />
+              <Text>Body - {`{"path":""}`}</Text>
+              <br />
+              </div>
+              <br />
+              <Label>GoogleDrive</Label>
+              <div style={{marginLeft: "40px"}}>
+              <Text>HttpMethod - GET</Text>
+              <br />
+              <Text>ApiOperation - '/api/proxy/drive/v2/files'</Text>
+              <br />
+              <Text>Headers - [X-MS-TOKENPROVIDER-ID:"googledrive"] and [X-MS-PROXY-BACKEND-HOST:"https://www.googleapis.com/"]</Text>
+              <br />
+              </div>
+              <br />
+              <Label>API Documentation</Label>
+              <Text>Use any of the supported API's</Text>
+              <br />
+              <Link href='https://docs.microsoft.com/en-us/graph/api/resources/users?view=graph-rest-1.0'>Graph</Link>
+              <br />
+              <Link href='https://www.dropbox.com/developers/documentation/http/documentation'>Dropbox</Link>
+              <br />
+              <Link href='https://developers.google.com/drive/api/v2/reference/files/list'>GoogleDrive</Link>
+              <br />
+            </div>
             <br />
           </div>
         }
