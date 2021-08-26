@@ -121,11 +121,11 @@ class App extends React.Component {
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
             <Separator theme={mainTheme}>Step 2: Manage Tokens</Separator>
-            <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
             }}>
+               <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
               {this.state.supportedTokenProviders.map((item) => {
                 return <div>
                   <Connect name={item} />
@@ -146,11 +146,11 @@ class App extends React.Component {
               <Toggle defaultChecked onText="show" offText="hide" onChange={this.proxySectionToggle} />
               <Label>Token gets attached before calling the backend. User's cannot get hold of token on the client-side.</Label>
             </Stack>
-            <div style={{marginLeft: "20px"}}>
-            <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
-            <Text>{this.state.supportedTokenProviders.join()}</Text>
+            <div style={{marginLeft: "50px"}}>
+            <Label>Possible X-MS-TOKENPROVIDER-ID values: </Label>
+            <Text>{this.state.supportedTokenProviders.join(' ')}</Text>
             <br />
-            <Text>See Documentation section for more examples.</Text>
+            <Text>For help see documentation below..</Text>
             </div>
             <br />
           </div>
