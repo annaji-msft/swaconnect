@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack, Pivot, PivotItem, Separator} from '@fluentui/react';
+import { Dropdown, TextField, PrimaryButton, ThemeProvider, Stack, Pivot, PivotItem, Separator, DefaultEffects} from '@fluentui/react';
 
 const dropdownStyles = {
   dropdown: { width: 100 }
@@ -83,7 +83,7 @@ class Proxy extends React.Component {
   };
 
   render() {
-    return (<div style={{paddingLeft: "200px", paddingRight: "200px", paddingTop: "30px", paddingBottom: "30px"}}>
+    return (<div style={{ boxShadow: DefaultEffects.elevation8, paddingLeft: "200px", paddingRight: "200px", paddingTop: "30px", paddingBottom: "30px"}}>
       <ThemeProvider>
         <Separator>Request</Separator>
         <Stack horizontal tokens={{

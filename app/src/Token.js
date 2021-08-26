@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-import {ThemeProvider, Stack, Label, TextField, PrimaryButton, DefaultButton } from '@fluentui/react';  
+import {ThemeProvider, Stack, Label, TextField, PrimaryButton, DefaultButton , DefaultEffects} from '@fluentui/react';  
 
 class Token extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      token: undefined,
-      status: undefined, 
+      token: "",
+      status: "", 
       connected: false
     };
   }
@@ -66,7 +66,7 @@ class Token extends React.Component {
   }
 
   render() { 
-    return (<div>
+    return (<div style={{boxShadow: DefaultEffects.elevation4}}>
       <ThemeProvider>
       <Label>{this.props.name} : {this.state.status}</Label>
          <Stack verticalAlign tokens={{

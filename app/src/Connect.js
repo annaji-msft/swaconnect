@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { DefaultButton, ThemeProvider, Stack, Label } from '@fluentui/react';  
+import { DefaultButton, ThemeProvider, Stack, Label, DefaultEffects } from '@fluentui/react';  
 
 class Connect extends React.Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class Connect extends React.Component {
   }
 
   render() { 
-    return (<div>
+    return (<div style={{boxShadow: DefaultEffects.elevation4}}>
       <ThemeProvider>
       <Label>{this.props.name} : {this.state.status}</Label>
          <Stack verticalAlign tokens={{
