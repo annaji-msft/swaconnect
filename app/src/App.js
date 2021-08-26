@@ -11,7 +11,8 @@ import {
   Separator,
   Spinner,
   SpinnerSize,
-  Link
+  Link,
+  DefaultEffects
 } from '@fluentui/react';
 import { createTheme } from '@fluentui/react/lib/Styling';
 
@@ -122,6 +123,7 @@ class App extends React.Component {
           && <div>
             <Separator theme={mainTheme}>Step 2: Manage Tokens</Separator>
             <h4 style={{ color: 'red' }}>DO NOT USE YOUR PERSONAL ACCOUNTS FOR CREATING TOKENS. USE A TEST ACCOUNT (or) DELETE THE TOKEN AFTER TRIAL</h4>
+            <div style={{boxShadow: DefaultEffects.elevation64 }}>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
@@ -133,6 +135,7 @@ class App extends React.Component {
                 </div>
               })}
             </Stack>
+            </div>
           </div>}
         {this.state.userId !== undefined && this.state.supportedTokenProviders !== undefined
           && <div>
@@ -156,7 +159,7 @@ class App extends React.Component {
           </div>
         }
         {this.state.userId !== undefined && this.state.showProxy === true && this.state.supportedTokenProviders !== undefined
-          && <div>
+          && <div style={{boxShadow: DefaultEffects.elevation16 }}>
             <Proxy />
           </div>}
         <br />
@@ -174,7 +177,7 @@ class App extends React.Component {
         }
 
         {this.state.userId !== undefined && this.state.showGetToken === true && this.state.supportedTokenProviders !== undefined
-          && <div>
+          && <div style={{boxShadow: DefaultEffects.elevation16 }}>
             <Stack horizontal horizontalAlign="center" tokens={{
               childrenGap: 10,
               padding: 10,
@@ -203,7 +206,7 @@ class App extends React.Component {
         }
 
         {this.state.showDocs === true  &&
-          <div>
+         <div style={{boxShadow: DefaultEffects.elevation8 }}>
             <br />
             <Label>Programatically Manage Tokens in Static Web Apps:</Label>
             <div style={{marginLeft: "20px"}}>
