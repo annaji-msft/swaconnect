@@ -73,7 +73,7 @@ class Connect extends React.Component {
   render() { 
     return (<div style={{boxShadow: DefaultEffects.elevation4}}>
       <ThemeProvider>
-      <Label>{this.props.name} : {this.state.status}</Label>
+      <Label style={{marginLeft: "10px"}}>{this.props.name} : {this.state.status}</Label>
          <Stack verticalAlign tokens={{
                childrenGap: "l2",
                padding: "l2"
