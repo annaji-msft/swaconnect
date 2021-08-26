@@ -149,7 +149,8 @@ class App extends React.Component {
             <div style={{marginLeft: "20px"}}>
             <Label>Values supported currently for header X-MS-TOKENPROVIDER-ID</Label>
             <Text>{this.state.supportedTokenProviders.join()}</Text>
-            <Text>See documentation below for examples.</Text>
+            <br />
+            <Text>See Documentation section for examples.</Text>
             </div>
             <br />
           </div>
