@@ -10,9 +10,9 @@ using System.Security.Cryptography;
 
 namespace MSHA.ApiConnections
 {
-	public class ApiConnectionDataProvider : AzureResourceManagerDataProvider, IApiConnectionDataProvider
+	public class APIMTokenStoreDataProvider : AzureResourceManagerDataProvider, IAPIMTokenStoreDataProvider
 	{
-		public ApiConnectionDataProvider(IDiagnosticsTracing logger, HttpClient httpClient)
+		public APIMTokenStoreDataProvider(IDiagnosticsTracing logger, HttpClient httpClient)
 			: base(logger, httpClient)
 		{
 		}
@@ -24,7 +24,7 @@ namespace MSHA.ApiConnections
 		{
 			return new Uri(
 				baseUri: AzureResourceManagerDataProvider.AzureResourceManagerApiEndpoint,
-				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tokenProviders?api-version=2021-04-01-preview");
+				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders?api-version=2021-04-01-preview");
 		}
 
 		private static Uri GetCreateApiConnectionUri(
@@ -36,7 +36,7 @@ namespace MSHA.ApiConnections
 		{
 			return new Uri(
 				baseUri: AzureResourceManagerDataProvider.AzureResourceManagerApiEndpoint,
-				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tokenProviders/{tokenProviderName}/connections/{connectionName}?api-version=2021-04-01-preview");
+				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}?api-version=2021-04-01-preview");
 		}
 
 		private static Uri GetConsentLinksApiConnectionUri(
@@ -48,10 +48,10 @@ namespace MSHA.ApiConnections
 		{
 			return new Uri(
 				baseUri: AzureResourceManagerDataProvider.AzureResourceManagerApiEndpoint,
-				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/tokenProviders/{tokenProviderName}/connections/{connectionName}/getLoginLinks?api-version=2021-04-01-preview");
+				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}/getLoginLinks?api-version=2021-04-01-preview");
 		}
 
-		public async Task<AzureResourceList<TokenProviderResource>> ListTokenProvidersAsync(
+		public async Task<AzureResourceList<AuthorizationProviderResource>> ListAuthorizationProvidersAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -62,13 +62,13 @@ namespace MSHA.ApiConnections
 			//location.CheckArgumentForNullOrWhiteSpace(nameof(location));
 			//connectorType.CheckArgumentForNullOrWhiteSpace(nameof(connectorType));
 
-			 var requestUri = ApiConnectionDataProvider.ListTokenProvidersUri(
+			 var requestUri = APIMTokenStoreDataProvider.ListTokenProvidersUri(
 				subscriptionId,
 				resourceGroupId,
 				serviceName);
 
 			//TODO: need to add request content (body.json)
-			var result = await base.CallAzureResourceManagerAsync<AzureResourceList<TokenProviderResource>>(
+			var result = await base.CallAzureResourceManagerAsync<AzureResourceList<AuthorizationProviderResource>>(
 				accessToken: accessToken,
 				requestUri: requestUri,
 				httpMethod: HttpMethod.Get)
@@ -83,7 +83,7 @@ namespace MSHA.ApiConnections
 			return result.Response;
 		}
 
-		public async Task<ApiConnectionResource> CreateConnectionAsync(
+		public async Task<AuthorizationResource> CreateAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -97,27 +97,18 @@ namespace MSHA.ApiConnections
 			//location.CheckArgumentForNullOrWhiteSpace(nameof(location));
 			//connectorType.CheckArgumentForNullOrWhiteSpace(nameof(connectorType));
 
-			 var requestUri = ApiConnectionDataProvider.GetCreateApiConnectionUri(
+			 var requestUri = APIMTokenStoreDataProvider.GetCreateApiConnectionUri(
 				subscriptionId,
 				resourceGroupId,
 				serviceName,
 				tokenProviderName,
 				connectionName);
 
-			var requestContent = new ApiConnectionResource 
-			{ 
-			 	Properties = new ApiConnectionResourceProperties 
-				{ 
-					TenantId = tenantId
-				}
-			};
-
 			//TODO: need to add request content (body.json)
-			var result = await base.CallAzureResourceManagerAsync<ApiConnectionResource, ApiConnectionResource>(
+			var result = await base.CallAzureResourceManagerAsync<AuthorizationResource, AuthorizationResource>(
 				accessToken: accessToken,
 				requestUri: requestUri,
-				httpMethod: HttpMethod.Put,
-				requestContent: requestContent)
+				httpMethod: HttpMethod.Put)
 				.ConfigureAwait(continueOnCapturedContext: false);
 
 			if (!result.HttpStatusCode.IsSuccessfulRequest())
@@ -129,7 +120,7 @@ namespace MSHA.ApiConnections
 			return result.Response;
 		}
 
-		public async Task<ApiConnectionResource> GetConnectionAsync(
+		public async Task<AuthorizationResource> GetAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -142,7 +133,7 @@ namespace MSHA.ApiConnections
 			//location.CheckArgumentForNullOrWhiteSpace(nameof(location));
 			//connectorType.CheckArgumentForNullOrWhiteSpace(nameof(connectorType));
 
-			 var requestUri = ApiConnectionDataProvider.GetCreateApiConnectionUri(
+			 var requestUri = APIMTokenStoreDataProvider.GetCreateApiConnectionUri(
 				subscriptionId,
 				resourceGroupId,
 				serviceName,
@@ -150,7 +141,7 @@ namespace MSHA.ApiConnections
 				connectionName);
 
 			//TODO: need to add request content (body.json)
-			var result = await base.CallAzureResourceManagerAsync<ApiConnectionResource>(
+			var result = await base.CallAzureResourceManagerAsync<AuthorizationResource>(
 				accessToken: accessToken,
 				requestUri: requestUri,
 				httpMethod: HttpMethod.Get)
@@ -168,7 +159,7 @@ namespace MSHA.ApiConnections
 			return result.Response;
 		}
 
-		public async Task<ApiConnectionConsentLinkResponse> GetConsentLinkAsync(
+		public async Task<LoginLinkResponse> GetConsentLinkAsync(
 			string accessToken, 
 			string subscriptionId, 
 			string resourceGroupId, 
@@ -181,20 +172,17 @@ namespace MSHA.ApiConnections
 			//resourceGroupId.CheckArgumentForNullOrWhiteSpace(nameof(resourceGroupId));
 			//connectorType.CheckArgumentForNullOrWhiteSpace(nameof(connectorType));
 
-			var requestUri = ApiConnectionDataProvider.GetConsentLinksApiConnectionUri(
+			var requestUri = APIMTokenStoreDataProvider.GetConsentLinksApiConnectionUri(
 				subscriptionId,
 				resourceGroupId,
 				serviceName,
 				tokenProviderName,
 				connectionName);
 
-			var requestContent = new ApiConnectionConsentLink();
-			var parameter = new Parameters();
-			parameter.ParameterName = "token";
-			parameter.RedirectUrl = redirectUrl;
-			requestContent.Parameters = new Parameters[] { parameter };
+			var requestContent = new LoginLinkRequest();
+			requestContent.PostLoginRedirectUrl = redirectUrl;
 
-			var result = await base.CallAzureResourceManagerAsync<ApiConnectionConsentLink, ApiConnectionConsentLinkResponse>(
+			var result = await base.CallAzureResourceManagerAsync<LoginLinkRequest, LoginLinkResponse>(
 				accessToken: accessToken,
 				requestUri: requestUri,
 				httpMethod: HttpMethod.Post,
@@ -210,7 +198,7 @@ namespace MSHA.ApiConnections
 			return result.Response;
 		}
 
-		public async Task<object> DeleteConnectionAsync(
+		public async Task<object> DeleteAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -218,7 +206,7 @@ namespace MSHA.ApiConnections
 			string tokenProviderName,
 			string connectionName)
 		{
-			var requestUri = ApiConnectionDataProvider.GetCreateApiConnectionUri(
+			var requestUri = APIMTokenStoreDataProvider.GetCreateApiConnectionUri(
 			   subscriptionId,
 			   resourceGroupId,
 			   serviceName,

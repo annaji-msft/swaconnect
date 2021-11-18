@@ -34,7 +34,7 @@ namespace Company.Function
             log.LogInformation($"redirecturl - {redirectUrl}");
              log.LogInformation($"connectorId - {tokenProviderId}");
             
-            ApiConnectionResource connection = null;
+            AuthorizationResource connection = null;
 
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");
@@ -52,13 +52,13 @@ namespace Company.Function
                 connection = await ConnectionManager.CreateConnectionAsync(tokenProviderId, connectionId, "72f988bf-86f1-41af-91ab-2d7cd011db47");
                 
                 var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
-                return new ContentResult { Content =  consentLinks.Value[0].Link, StatusCode =  401 };
+                return new ContentResult { Content =  consentLinks.LoginLink, StatusCode =  401 };
             } 
             else if (connection.Properties.Status.ToUpper().Equals("ERROR")) 
             {
                 log.LogInformation("connection found but not authenticated!");
                 var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
-                return new ContentResult { Content =  consentLinks.Value[0].Link, StatusCode =  401 };
+                return new ContentResult { Content =  consentLinks.LoginLink, StatusCode =  401 };
             } 
             else 
             {

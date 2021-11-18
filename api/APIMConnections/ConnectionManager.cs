@@ -17,7 +17,7 @@ namespace MSHA.ApiConnections
 		public static IDiagnosticsTracing logger;
 		public static HttpClient httpClient;
 		public static IAuthenticationDataProvider authenticationDataProvider;
-		public static IApiConnectionDataProvider apiConnectionDataProvider;
+		public static IAPIMTokenStoreDataProvider apiConnectionDataProvider;
 
 		static ConnectionManager()
 		{
@@ -29,7 +29,7 @@ namespace MSHA.ApiConnections
 			httpClient = new HttpClient();
 
 			authenticationDataProvider = new ManagedIdentityDataProvider(GetManagedIdentitySettings(), logger);
-			apiConnectionDataProvider = new ApiConnectionDataProvider(logger, httpClient);
+			apiConnectionDataProvider = new APIMTokenStoreDataProvider(logger, httpClient);
 		}
 
 		private static ManagedIdentitySettings GetManagedIdentitySettings()
@@ -51,7 +51,7 @@ namespace MSHA.ApiConnections
 		{
 			var accessToken = await GetArmAccessToken();
 
-			var tokeProviders = await apiConnectionDataProvider.ListTokenProvidersAsync(
+			var tokeProviders = await apiConnectionDataProvider.ListAuthorizationProvidersAsync(
 				accessToken,
 				subscriptionId,
 				resourceGroupId,
@@ -67,14 +67,14 @@ namespace MSHA.ApiConnections
 		}
 
 		//change to take connection type and name
-		public static async Task<ApiConnectionResource> CreateConnectionAsync(
+		public static async Task<AuthorizationResource> CreateConnectionAsync(
 			string tokenProviderName,
 			string connectionName,
 			string tenantId)
 		{
 			var accessToken = await GetArmAccessToken();
 
-			var createdApiConnection = await apiConnectionDataProvider.CreateConnectionAsync(
+			var createdApiConnection = await apiConnectionDataProvider.CreateAuthorizationAsync(
 				accessToken,
 				subscriptionId,
 				resourceGroupId,
@@ -86,13 +86,13 @@ namespace MSHA.ApiConnections
 			return createdApiConnection;
 		}
 
-		public static async Task<ApiConnectionResource> GetConnectionAsync(
+		public static async Task<AuthorizationResource> GetConnectionAsync(
 			string tokenProviderName,
 			string connectionName)
 		{
 			var accessToken = await GetArmAccessToken();
 
-			var connection = await apiConnectionDataProvider.GetConnectionAsync(
+			var connection = await apiConnectionDataProvider.GetAuthorizationAsync(
 				accessToken,
 				subscriptionId,
 				resourceGroupId,
@@ -103,7 +103,7 @@ namespace MSHA.ApiConnections
 			return connection;
 		}
 
-		public static async Task<ApiConnectionConsentLinkResponse> GetConsentLinkAsync(
+		public static async Task<LoginLinkResponse> GetConsentLinkAsync(
 			string tokenProviderName,
 			string connectionName,
 			string redirectUrl)
@@ -128,7 +128,7 @@ namespace MSHA.ApiConnections
 		{
 			var accessToken = await GetArmAccessToken();
 
-			var deletedApiConnection = await apiConnectionDataProvider.DeleteConnectionAsync(
+			var deletedApiConnection = await apiConnectionDataProvider.DeleteAuthorizationAsync(
 				accessToken,
 				subscriptionId,
 				resourceGroupId,

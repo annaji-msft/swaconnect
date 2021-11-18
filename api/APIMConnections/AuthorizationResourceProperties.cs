@@ -7,24 +7,21 @@ using Newtonsoft.Json;
 
 namespace MSHA.ApiConnections
 {
-	public class ApiConnectionResourceProperties
+	public class AuthorizationResourceProperties
 	{
-		[JsonProperty(PropertyName = "tenantId")]
-		public string TenantId { get; set; }
-
-		[JsonProperty(PropertyName = "Status")]
+		[JsonProperty(PropertyName = "status")]
 		public string Status { get; set; }
 
-		[JsonProperty(PropertyName = "Error")]
+		[JsonProperty(PropertyName = "error")]
 		public Error Error { get; set; }
 	}
 
 	public class Error
 	{
-		[JsonProperty(PropertyName = "Code")]
+		[JsonProperty(PropertyName = "code")]
 		public string Code { get; set; }
 
-		[JsonProperty(PropertyName = "Message")]
+		[JsonProperty(PropertyName = "message")]
 		public string Message { get; set; }
 	}
 }

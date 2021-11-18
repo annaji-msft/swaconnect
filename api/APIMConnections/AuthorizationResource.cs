@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MSHA.ApiConnections
 {
-    public class ApiConnectionResource : AzureResource<ApiConnectionResourceProperties>
+    public class AuthorizationResource : AzureResource<AuthorizationResourceProperties>
     {
     }
 }

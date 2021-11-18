@@ -27,7 +27,7 @@ namespace Company.Function
 
             log.LogInformation($"principalId - {principalId}");
             
-            ApiConnectionResource connection = null;
+            AuthorizationResource connection = null;
 
             var connectionId = principalId.ToString();
             log.LogInformation($"connectionId - {connectionId}");

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace MSHA.ApiConnections
 {
-    public interface IApiConnectionDataProvider
+    public interface IAPIMTokenStoreDataProvider
     {
-		Task<AzureResourceList<TokenProviderResource>> ListTokenProvidersAsync(
+		Task<AzureResourceList<AuthorizationProviderResource>> ListAuthorizationProvidersAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
 			string serviceName);
 
-       Task<ApiConnectionResource> CreateConnectionAsync(
+       Task<AuthorizationResource> CreateAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -23,7 +23,7 @@ namespace MSHA.ApiConnections
 			string connectionName,
 			string tenantId);
         
-         Task<ApiConnectionResource> GetConnectionAsync(
+         Task<AuthorizationResource> GetAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
@@ -31,7 +31,7 @@ namespace MSHA.ApiConnections
 			string tokenProviderName,
 			string connectionName);
 
-        Task<ApiConnectionConsentLinkResponse> GetConsentLinkAsync(
+        Task<LoginLinkResponse> GetConsentLinkAsync(
 			string accessToken, 
 			string subscriptionId, 
 			string resourceGroupId, 
@@ -40,7 +40,7 @@ namespace MSHA.ApiConnections
 			string connectionName, 
 			string redirectUrl);
 
-        Task<object> DeleteConnectionAsync(
+        Task<object> DeleteAuthorizationAsync(
 			string accessToken,
 			string subscriptionId,
 			string resourceGroupId,
