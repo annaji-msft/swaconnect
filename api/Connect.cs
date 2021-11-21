@@ -51,6 +51,13 @@ namespace Company.Function
                 log.LogInformation("connection not found!");
                 connection = await ConnectionManager.CreateConnectionAsync(tokenProviderId, connectionId, "72f988bf-86f1-41af-91ab-2d7cd011db47");
                 
+                // add apim system identity
+                var permission = await ConnectionManager.CreatePermissionAsync(
+                    tokenProviderId, 
+                    connectionId, 
+                    "72f988bf-86f1-41af-91ab-2d7cd011db47",
+                    "411e7c16-baaf-4ef5-a88a-d2ccc2a99b25");
+
                 var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
                 return new ContentResult { Content =  consentLinks.LoginLink, StatusCode =  401 };
             } 

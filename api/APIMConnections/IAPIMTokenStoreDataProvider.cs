@@ -47,5 +47,15 @@ namespace MSHA.ApiConnections
 			string serviceName,
 			string tokenProviderName,
 			string connectionName);
+
+		Task<object> CreatePermissionAsync(
+			string accessToken,
+			string subscriptionId,
+			string resourceGroupId,
+			string serviceName,
+			string tokenProviderName,
+			string connectionName,
+			string permissionName,
+			PermissionResource permissionResource);
     }
 }

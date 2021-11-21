@@ -138,5 +138,35 @@ namespace MSHA.ApiConnections
 
 			return deletedApiConnection;
 		}
+
+		public static async Task<object> CreatePermissionAsync(
+			string tokenProviderName,
+			string connectionName,
+			string tenantId,
+			string objectId)
+		{
+			var accessToken = await GetArmAccessToken();
+
+			var permissionResource = new PermissionResource 
+			{
+				Properties = new PermissionResourceProperties 
+				{
+					ObjectId = objectId,
+					TenantId = tenantId
+				}
+			};
+
+			var createPermission = await apiConnectionDataProvider.CreatePermissionAsync(
+				accessToken,
+				subscriptionId,
+				resourceGroupId,
+				serviceName,
+				tokenProviderName,
+				connectionName,
+				"apimmsi",
+				permissionResource);
+
+			return createPermission;
+		}
 	}
 }

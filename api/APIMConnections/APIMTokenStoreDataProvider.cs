@@ -39,6 +39,19 @@ namespace MSHA.ApiConnections
 				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}?api-version=2021-04-01-preview");
 		}
 
+		private static Uri GetCreatePermissionUri(
+			string subscriptionId, 
+			string resourceGroupName, 
+			string serviceName,
+			string tokenProviderName,
+			string connectionName,
+			string permissionName)
+		{
+			return new Uri(
+				baseUri: AzureResourceManagerDataProvider.AzureResourceManagerApiEndpoint,
+				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}/permissions/{permissionName}?api-version=2021-04-01-preview");
+		}
+
 		private static Uri GetConsentLinksApiConnectionUri(
 			string subscriptionId, 
 			string resourceGroupName, 
@@ -224,6 +237,41 @@ namespace MSHA.ApiConnections
 			{
 				throw new InvalidOperationException(
 					message: string.Format("Call to create connection failed with '{0}'", result.Error));
+			}
+
+			return result.Response;
+		}
+
+		public async Task<object> CreatePermissionAsync(
+			string accessToken,
+			string subscriptionId,
+			string resourceGroupId,
+			string serviceName,
+			string tokenProviderName,
+			string connectionName,
+			string permissionName,
+			PermissionResource permissionResource)
+		{
+			var requestUri = APIMTokenStoreDataProvider.GetCreatePermissionUri(
+			   subscriptionId,
+			   resourceGroupId,
+			   serviceName,
+			   tokenProviderName,
+			   connectionName, 
+			   permissionName);
+
+			//TODO: need to add request content (body.json)
+			var result = await base.CallAzureResourceManagerAsync<PermissionResource, PermissionResource>(
+				accessToken: accessToken,
+				requestUri: requestUri,
+				httpMethod: HttpMethod.Put,
+				requestContent: permissionResource)
+				.ConfigureAwait(continueOnCapturedContext: false);
+
+			if (!result.HttpStatusCode.IsSuccessfulRequest())
+			{
+				throw new InvalidOperationException(
+					message: string.Format("Call to create permission failed with '{0}'", result.Error));
 			}
 
 			return result.Response;

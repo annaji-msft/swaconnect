@@ -58,7 +58,13 @@ namespace Company.Function
 
                     var result = await httpClient.SendAsync(httpRequestMessage);
 
-                    return  new ContentResult { StatusCode =  (int)result.StatusCode, Content =  await result.Content.ReadAsStringAsync() };
+                    var statusCode = (int)result.StatusCode;
+                    var content = await result.Content.ReadAsStringAsync();
+
+                     log.LogInformation($"statusCode - {statusCode}");
+                     // log.LogInformation($"content - {content}");
+
+                    return  new ContentResult { StatusCode =  statusCode, Content =  content };
                 }
             }
             else 

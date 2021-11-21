@@ -13,6 +13,6 @@ namespace MSHA.ApiConnections
 		public string ObjectId { get; set; }
 
 		[JsonProperty(PropertyName = "tenantId")]
-		public Error TenantId { get; set; }
+		public string TenantId { get; set; }
 	}
 }
