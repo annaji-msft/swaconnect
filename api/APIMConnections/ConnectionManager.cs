@@ -21,9 +21,9 @@ namespace MSHA.ApiConnections
 
 		static ConnectionManager()
 		{
-			subscriptionId = "4f5285a3-9fd7-40ad-91b1-d8fc3823983d";
-			serviceName = "anganti-preview";
-			resourceGroupId = "anganti";
+			subscriptionId = "2aa7f2e0-fa75-4e9b-8102-271319d1d736";
+			serviceName = "tokenstore-demo-apim";
+			resourceGroupId = "tokenstore-demo-apim";
 
 			logger = new NoopDiagnosticTracing();
 			httpClient = new HttpClient();
