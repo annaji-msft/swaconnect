@@ -148,7 +148,7 @@ namespace MSHA.ApiConnections
 				.ConfigureAwait(continueOnCapturedContext: false);
 
 			// This should be NotFound
-			if(result.HttpStatusCode == HttpStatusCode.BadRequest) return null;
+			if(result.HttpStatusCode == HttpStatusCode.NotFound) return null;
 
 			if (!result.HttpStatusCode.IsSuccessfulRequest())
 			{
