@@ -49,7 +49,7 @@ namespace MSHA.ApiConnections
 		{
 			return new Uri(
 				baseUri: AzureResourceManagerDataProvider.AzureResourceManagerApiEndpoint,
-				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}/permissions/{permissionName}?api-version=2021-04-01-preview");
+				relativeUri: $"subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/authorizationProviders/{tokenProviderName}/authorizations/{connectionName}/accessPolicies/{permissionName}?api-version=2021-04-01-preview");
 		}
 
 		private static Uri GetConsentLinksApiConnectionUri(
@@ -121,7 +121,8 @@ namespace MSHA.ApiConnections
 			var result = await base.CallAzureResourceManagerAsync<AuthorizationResource, AuthorizationResource>(
 				accessToken: accessToken,
 				requestUri: requestUri,
-				httpMethod: HttpMethod.Put)
+				httpMethod: HttpMethod.Put,
+				requestContent: new AuthorizationResource { Properties = new AuthorizationResourceProperties() })
 				.ConfigureAwait(continueOnCapturedContext: false);
 
 			if (!result.HttpStatusCode.IsSuccessfulRequest())

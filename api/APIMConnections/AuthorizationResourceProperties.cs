@@ -9,6 +9,12 @@ namespace MSHA.ApiConnections
 {
 	public class AuthorizationResourceProperties
 	{
+		[JsonProperty(PropertyName = "authorizationType")]
+		public string AuthorizationType { get; set; } = "oauth2";
+		
+		[JsonProperty(PropertyName = "oauth2grantType")]
+		public string Oauth2grantType { get; set; } = "authorizationCode";
+
 		[JsonProperty(PropertyName = "status")]
 		public string Status { get; set; }
 
