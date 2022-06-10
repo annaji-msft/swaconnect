@@ -21,9 +21,9 @@ namespace MSHA.ApiConnections
 
 		static ConnectionManager()
 		{
-			subscriptionId = "2aa7f2e0-fa75-4e9b-8102-271319d1d736";
-			serviceName = "tokenstore-demo-apim";
-			resourceGroupId = "tokenstore-demo-apim";
+			subscriptionId = "a59d7183-f4a0-4b15-8ecc-9542203d3c54";
+			serviceName = "swa-easytokens";
+			resourceGroupId = "swa-easytokens";
 
 			logger = new NoopDiagnosticTracing();
 			httpClient = new HttpClient();
