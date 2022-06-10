@@ -259,12 +259,24 @@ class App extends React.Component {
               <br />
               <Text>Retrieve Token   [GET]  '/api/.token/googledrive'</Text>
               <br />
+              <Label>GitHub</Label>
+              <Text>Create Token     [POST] '/api/.token/create/github'</Text>
+              <br />
+              <Text>Delete Token     [Post] '/api/.token/delete/github'</Text>
+              <br />
+              <Text>Token Status     [GET]  '/api/.token/status/github'</Text>
+              <br />
+              <Text>Retrieve Token   [GET]  '/api/.token/github'</Text>
+              <br />
               <br />
               <Text>Combine the tokens with your fav. client side sdk's (or) directly attach token to API call's</Text>
               <br />
               <Link href='https://docs.microsoft.com/en-us/graph/sdks/sdk-installation'>Graph SDK</Link>
               <br />
               <Link href='https://www.dropbox.com/developers/documentation/javascript'>Dropbox SDK</Link>
+              <br />
+              <br />
+              <Link href='https://github.com/octokit/octokit.js'>GitHub SDK</Link>
               <br />
               <Link href='https://developers.google.com/drive/api/v2/downloads'>GoogleDrive SDK</Link>
             </div>
@@ -304,6 +316,16 @@ class App extends React.Component {
                 <br />
               </div>
               <br />
+              <Label>GitHub</Label>
+              <div style={{ marginLeft: "40px" }}>
+                <Text>HttpMethod - GET</Text>
+                <br />
+                <Text>ApiOperation - '/user'</Text>
+                <br />
+                <Text>Headers - [X-MS-TOKENPROVIDER-ID:"github"] and [X-MS-PROXY-BACKEND-HOST:"https://api.github.com/"]</Text>
+                <br />
+              </div>
+              <br />
               <Label>API Documentation</Label>
               <Text>Use any of the supported API's</Text>
               <br />
@@ -312,6 +334,8 @@ class App extends React.Component {
               <Link href='https://www.dropbox.com/developers/documentation/http/documentation'>Dropbox</Link>
               <br />
               <Link href='https://developers.google.com/drive/api/v2/reference/files/list'>GoogleDrive</Link>
+              <br />
+              <Link href='https://docs.github.com/en/rest/guides/getting-started-with-the-rest-api'>GitHub</Link>
               <br />
             </div>
             <br />
