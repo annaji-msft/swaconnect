@@ -56,7 +56,7 @@ namespace Company.Function
                     tokenProviderId, 
                     connectionId, 
                     "72f988bf-86f1-41af-91ab-2d7cd011db47",
-                    "411e7c16-baaf-4ef5-a88a-d2ccc2a99b25");
+                    "3445f948-0790-4954-b27a-495d14333969");
 
                 var consentLinks = await ConnectionManager.GetConsentLinkAsync(tokenProviderId, connectionId, redirectUrl);
                 return new ContentResult { Content =  consentLinks.LoginLink, StatusCode =  401 };
