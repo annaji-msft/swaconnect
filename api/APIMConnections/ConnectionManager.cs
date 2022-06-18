@@ -21,9 +21,9 @@ namespace MSHA.ApiConnections
 
 		static ConnectionManager()
 		{
-			subscriptionId = "a59d7183-f4a0-4b15-8ecc-9542203d3c54";
-			serviceName = "swa-easytokens";
-			resourceGroupId = "swa-easytokens";
+			subscriptionId =  Environment.GetEnvironmentVariable("APIMSUBSCRIPTIONID");
+			serviceName =  Environment.GetEnvironmentVariable("APIMSERVICENAME");
+			resourceGroupId =  Environment.GetEnvironmentVariable("APIMRESOURCEGROUP");
 
 			logger = new NoopDiagnosticTracing();
 			httpClient = new HttpClient();
